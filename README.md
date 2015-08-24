@@ -24,3 +24,4 @@
 * [ ] User the view the favourite list
 * [ ] User can setting the preference
 
+Team Members: Jonas Wu, Sinze Ho, Yu Tu
