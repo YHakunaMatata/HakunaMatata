@@ -24,4 +24,23 @@
 * [ ] User the view the favourite list
 * [ ] User can setting the preference
 
-Team Members: Jonas Wu, Sinze Ho, Yu Tu
+
+## Wireframe
+
+Tab Pages
+
+<img src='Tab_Pages.png' title='Tab_Pages.png' width='1200px'  height='500px' alt='Tab_Pages.png' />
+
+Submit page
+
+<img src='Submit.png' title='Submit.png' width='400px'  height='600px' alt='Tab_Pages.png' />
+
+Login Page
+
+<img src='Login Page.png' title='Tab_Pages.png' width='800px'  height='600px' alt='Tab_Pages.png' />
+
+Detail Page
+
+<img src='wireframe-detail.png' title='wireframe-detail.png' width='400px'  height='600px'  alt='Tab_Pages.png' />
+GIF created with [Pencil](http://pencil.evolus.vn/).
+
