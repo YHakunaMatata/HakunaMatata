@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/mingfli/src/android-sdk/ads/samples/NativeAdSample/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">Native Ad Sample</string>
+    <string name="icon_desc">Ad icon</string>
+    <string name="image_desc">Ad image</string>
+    <string name="load_native_ad">Load Native Ad</string>
+    <string name="load_native_ads_list">Load Native Ads in ListView</string>
+</resources>

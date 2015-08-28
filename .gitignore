@@ -4,6 +4,3 @@
 /.idea/libraries
 .DS_Store
 /build
-.*.swp
-.DS_Store
-tmp/

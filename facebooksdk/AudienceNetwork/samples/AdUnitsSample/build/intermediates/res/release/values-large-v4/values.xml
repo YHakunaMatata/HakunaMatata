@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/mingfli/src/android-sdk/ads/samples/AdUnitsSample/res/values-large/layout.xml -->
+    <eat-comment/>
+    <bool name="is_tablet">true</bool>
+    <item name="main" type="layout">@layout/activity_ad_sample</item>
+</resources>

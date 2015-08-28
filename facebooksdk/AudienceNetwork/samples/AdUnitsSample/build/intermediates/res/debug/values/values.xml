@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/mingfli/src/android-sdk/ads/samples/AdUnitsSample/res/values/layouts.xml -->
+    <eat-comment/>
+    <bool name="is_tablet">false</bool>
+    <item name="main" type="layout">@layout/activity_ad_sample</item>
+    <!-- From: file:/Users/mingfli/src/android-sdk/ads/samples/AdUnitsSample/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">Ad Units Sample</string>
+    <string name="load_interstitial">Load Interstitial</string>
+    <string name="loading_status">Requesting an ad...</string>
+    <string name="show_interstitial">Show!</string>
+</resources>
