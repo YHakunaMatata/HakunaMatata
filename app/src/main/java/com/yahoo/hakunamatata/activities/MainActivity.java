@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,7 +16,7 @@ import com.yahoo.hakunamatata.adapters.ListingPagerAdapter;
 import com.yahoo.hakunamatata.fragments.ListingFragment;
 
 
-public class MainActivity extends ActionBarActivity implements ListingFragment.OnFragmentInteractionListener{
+public class MainActivity extends ActionBarActivity implements ListingFragment.OnFragmentInteractionListener {
     private ListingPagerAdapter adapter;
     private ViewPager viewPager;
     private SmartTabLayout viewPagerTab;
@@ -29,12 +30,17 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
     }
 
     private void setUpActionBar() {
-        if (getSupportActionBar().isShowing() == true) {
-            getSupportActionBar().setElevation(0);
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange3)));
-            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            getSupportActionBar().setCustomView(R.layout.action_bar);
-        }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mytoolbar);
+        setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.menu_main);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_hakuna);
+//        if (getSupportActionBar().isShowing() == true) {
+//            getSupportActionBar().setElevation(0);
+//            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange3)));
+//            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//            getSupportActionBar().setCustomView(R.layout.action_bar);
+//        }
     }
 
     private void setUpPager() {
@@ -67,7 +73,7 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickPost (MenuItem item) {
+    public void onClickPost(MenuItem item) {
         Toast.makeText(this, "Click Post", Toast.LENGTH_SHORT).show();
     }
 

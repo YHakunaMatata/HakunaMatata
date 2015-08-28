@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -52,6 +54,7 @@ public class FacebookFragment extends Fragment {
         return fragment;
     }
 
+
     public FacebookFragment() {
         // Required empty public constructor
 
@@ -75,9 +78,8 @@ public class FacebookFragment extends Fragment {
 
                         System.out.println("onSuccess");
 
-                        String accessToken = loginResult.getAccessToken()
-                                .getToken();
-                        Log.i("accessToken", accessToken);
+                        AccessToken accessToken = loginResult.getAccessToken();
+                        Log.i("accessToken", accessToken.getToken());
                         ((oauthCallBack) getActivity()).onSuccess(accessToken);
                     }
 
@@ -103,7 +105,7 @@ public class FacebookFragment extends Fragment {
     }
 
     public static interface oauthCallBack {
-        public void onSuccess(String accessToken);
+        public void onSuccess(AccessToken accessToken);
 
         public void onFailed();
     }

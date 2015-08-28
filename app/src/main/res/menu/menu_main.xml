@@ -1,12 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
     <item
         android:id="@+id/miPost"
         android:icon="@drawable/ic_post"
         android:onClick="onClickPost"
-        app:showAsAction="always"
         android:orderInCategory="5"
-        android:title="NEW POST">
-    </item>
+        android:title="NEW POST"
+        app:showAsAction="ifRoom|collapseActionView"></item>
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/logout"
+        android:onClick="onClickPost"
+        android:orderInCategory="5"
+        android:title="NEW POST"
+        app:showAsAction="ifRoom|collapseActionView"></item>
 </menu>

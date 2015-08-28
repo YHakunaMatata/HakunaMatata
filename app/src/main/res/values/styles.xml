@@ -1,8 +1,30 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="colorPrimary">@color/orange3</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Widget.MyTheme.ActionBar" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@color/orange3</item>
+        <item name="background">@color/orange3</item>
+        <item name="displayOptions">showHome|useLogo|showTitle</item>
+        <item name="android:logo">@drawable/ic_hakuna</item>
+        <item name="logo">@drawable/ic_hakuna</item>
+        <item name="android:icon">@drawable/ic_hakuna</item>
+        <item name="icon">@drawable/ic_hakuna</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_hakuna</item>
+        <item name="homeAsUpIndicator">@drawable/ic_hakuna</item>
+        <item name="android:showAsAction">always</item>
     </style>
 
 </resources>
