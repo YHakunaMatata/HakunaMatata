@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
 
 
         FacebookClient client = RestApplication.getRestClient();
-        client.getPostsOfGroup("173830556282081",
+        client.getPostsOfGroup(
                 new MyJsonHttpResponseHandler(this) {
                     @Override
                     public void successCallBack(int statusCode, Header[] headers, Object data) {
