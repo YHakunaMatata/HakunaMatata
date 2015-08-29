@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="access_token">accessToken</string>
     <string name="app_name">HakunaMatata</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -8,5 +9,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="login_label">Have fun</string>
     <string name="app_id">111031992582957</string>
+    <string name="networkerror">please check your network status</string>
+
 
 </resources>

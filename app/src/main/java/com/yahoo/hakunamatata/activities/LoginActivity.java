@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 
 import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.FacebookSdk;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.fragments.FacebookFragment;
@@ -36,6 +35,7 @@ public class LoginActivity extends ActionBarActivity implements FacebookFragment
         }
 
         if (Storage.read(this, "accessToken", "").length() > 0) {
+            Log.e("access token", Storage.read(this, this.getResources().getString(R.string.access_token), ""));
             navigateToMainActivity();
         }
 
@@ -51,14 +51,6 @@ public class LoginActivity extends ActionBarActivity implements FacebookFragment
         super.onDestroy();
     }
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.facebook_login);
-    }*/
-
-
     // Inflate the menu; this adds items to the action bar if it is present.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,7 +61,7 @@ public class LoginActivity extends ActionBarActivity implements FacebookFragment
 
     @Override
     public void onSuccess(AccessToken accessToken) {
-        Storage.write(this, "accessToken", accessToken.getToken());
+        Storage.write(this, this.getResources().getString(R.string.access_token), accessToken.getToken());
         navigateToMainActivity();
     }
 
