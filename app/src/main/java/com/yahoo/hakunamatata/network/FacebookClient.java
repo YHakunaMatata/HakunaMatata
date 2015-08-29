@@ -51,6 +51,14 @@ public class FacebookClient {
         getClient().get(apiUrl, decorateParams(params, "get"), handler);
     }
 
+    // RestClient.java
+    public void post(String message, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl(String.format("%s/feed", groupId));
+        RequestParams params = new RequestParams();
+        params.put("message", message);
+        getClient().post(apiUrl, decorateParams(params, "post"), handler);
+    }
+
     private String getApiUrl(String path) {
         return baseUrl + path;
     }

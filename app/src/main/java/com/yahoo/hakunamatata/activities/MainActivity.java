@@ -17,6 +17,7 @@ import com.yahoo.hakunamatata.adapters.ListingPagerAdapter;
 import com.yahoo.hakunamatata.fragments.ListingFragment;
 import com.yahoo.hakunamatata.network.FacebookClient;
 import com.yahoo.hakunamatata.network.MyJsonHttpResponseHandler;
+import com.yahoo.hakunamatata.storage.Storage;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -35,9 +36,8 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
         setUpActionBar();
         setUpPager();
 
-
         FacebookClient client = RestApplication.getRestClient();
-        client.getPostsOfGroup(
+        client.post("test from api",
                 new MyJsonHttpResponseHandler(this) {
                     @Override
                     public void successCallBack(int statusCode, Header[] headers, Object data) {
@@ -92,12 +92,16 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         return super.onOptionsItemSelected(item);
     }
 
     public void onClickPost(MenuItem item) {
         Toast.makeText(this, "Click Post", Toast.LENGTH_SHORT).show();
+    }
+
+    public void logout(MenuItem item) {
+        Storage.write(this, this.getResources().getString(R.string.access_token), "");
+        finish();
     }
 
     @Override

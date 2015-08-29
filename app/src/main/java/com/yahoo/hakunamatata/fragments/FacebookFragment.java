@@ -69,15 +69,13 @@ public class FacebookFragment extends Fragment {
         LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
         authButton.setFragment(this);
 
-        List<String> permissionNeeds = Arrays.asList();
-        authButton.setReadPermissions(permissionNeeds);
+        authButton.setPublishPermissions(Arrays.asList("publish_actions"));
         authButton.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
 
                         System.out.println("onSuccess");
-
                         AccessToken accessToken = loginResult.getAccessToken();
                         Log.i("accessToken", accessToken.getToken());
                         ((oauthCallBack) getActivity()).onSuccess(accessToken);

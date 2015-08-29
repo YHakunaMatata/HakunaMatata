@@ -13,8 +13,8 @@
     <item
         android:id="@+id/logout"
         android:icon="@drawable/logout"
-        android:onClick="onClickPost"
+        android:onClick="logout"
         android:orderInCategory="5"
-        android:title="NEW POST"
+        android:title="logout"
         app:showAsAction="ifRoom|collapseActionView"></item>
 </menu>
