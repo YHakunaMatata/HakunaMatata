@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:elastic="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mytoolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,6 +9,23 @@
     android:minHeight="?attr/actionBarSize"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <RelativeLayout
+        android:id="@+id/elastic_download_view_container"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <is.arontibo.library.ElasticDownloadView
+            android:id="@+id/elastic_download_view"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:alpha="1"
+            elastic:backgroundColor="@color/orange3"
+            elastic:vc_tintMode="src_atop" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,4 +41,5 @@
             android:scaleType="centerCrop"
             android:visibility="visible" />
     </LinearLayout>
+
 </android.support.v7.widget.Toolbar>

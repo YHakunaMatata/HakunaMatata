@@ -60,8 +60,15 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.JokeHold
         return postList.size();
     }
 
-    public void setPostList(List<Post> postList) {
-        this.postList = postList;
+    public void addWithPostList(List<Post> postList) {
+        for (Post post : postList) {
+            this.postList.add(post);
+        }
+    }
+
+    public void clearAll() {
+        postList.clear();
+        this.notifyDataSetChanged();
     }
 
     public static class JokeHolder extends RecyclerView.ViewHolder {

@@ -34,18 +34,12 @@ public abstract class MyJsonHttpResponseHandler extends JsonHttpResponseHandler 
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject data) {
-        Log.e("error", "on JSONObject failure");
-        Log.e("statusCode", String.valueOf(statusCode));
-        Log.e("headers", headers.toString());
         Toast.makeText(context, context.getResources().getString(R.string.networkerror), Toast.LENGTH_LONG).show();
         errorCallBack();
     }
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray data) {
-        Log.e("error", "on JSONObject failure");
-        Log.e("statusCode", String.valueOf(statusCode));
-        Log.e("headers", headers.toString());
         Toast.makeText(context, context.getResources().getString(R.string.networkerror), Toast.LENGTH_LONG).show();
         errorCallBack();
     }

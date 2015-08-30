@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by jonaswu on 2015/8/18.
  */
 public class ListingPagerAdapter extends FragmentPagerAdapter implements SmartTabLayout.TabProvider {
-    final int PAGE_COUNT = 3;
+    final int PAGE_COUNT = 1;
     private final FragmentManager fm;
     private String tabTitles[] = new String[]{"JOKES", "IMAGES", "VIDEOS"};
     private Map<Integer, Fragment> mFragmentTags = new HashMap<>();
@@ -48,6 +48,9 @@ public class ListingPagerAdapter extends FragmentPagerAdapter implements SmartTa
                 case 1:
                     mFragmentTags.put(1, (Fragment) obj);
                     break;
+                case 2:
+                    mFragmentTags.put(2, (Fragment) obj);
+                    break;
             }
         }
         return obj;
@@ -63,6 +66,9 @@ public class ListingPagerAdapter extends FragmentPagerAdapter implements SmartTa
             case 1:
                 frag = JokeFragment.newInstance();
                 break;
+            case 2:
+                frag = JokeFragment.newInstance();
+                break;
             default:
                 frag = JokeFragment.newInstance();
                 break;
@@ -76,14 +82,7 @@ public class ListingPagerAdapter extends FragmentPagerAdapter implements SmartTa
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        // Generate title based on item position
-        return tabTitles[position];
-    }
-
-    @Override
     public View createTabView(ViewGroup viewGroup, int i, PagerAdapter pagerAdapter) {
-        Log.d("my", "createTabView");
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.tab_layout, viewGroup, false);
         TextView text = (TextView) view.findViewById(R.id.tvTabText);

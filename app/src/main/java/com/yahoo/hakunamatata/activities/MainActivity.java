@@ -1,56 +1,28 @@
 package com.yahoo.hakunamatata.activities;
 
-import android.app.ActionBar;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.adapters.ListingPagerAdapter;
-import com.yahoo.hakunamatata.fragments.ListingFragment;
-import com.yahoo.hakunamatata.network.FacebookClient;
-import com.yahoo.hakunamatata.network.MyJsonHttpResponseHandler;
 import com.yahoo.hakunamatata.storage.Storage;
 
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-
-public class MainActivity extends ActionBarActivity implements ListingFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity {
     private ListingPagerAdapter adapter;
     private ViewPager viewPager;
     private SmartTabLayout viewPagerTab;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setUpActionBar();
         setUpPager();
-
     }
 
-    private void setUpActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.mytoolbar);
-        setSupportActionBar(toolbar);
-        toolbar.inflateMenu(R.menu.menu_main);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        // getSupportActionBar().setIcon(R.drawable.ic_hakuna);
-//        if (getSupportActionBar().isShowing() == true) {
-//            getSupportActionBar().setElevation(0);
-//            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange3)));
-//            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//            getSupportActionBar().setCustomView(R.layout.action_bar);
-//        }
-    }
 
     private void setUpPager() {
         adapter = new ListingPagerAdapter(
@@ -65,22 +37,6 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
         viewPagerTab.setViewPager(viewPager);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
-    }
-
     public void onClickPost(MenuItem item) {
         Toast.makeText(this, "Click Post", Toast.LENGTH_SHORT).show();
     }
@@ -90,9 +46,4 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
         finish();
     }
 
-    @Override
-    public void onFragmentInteraction() {
-        // do nothing
-        return;
-    }
 }

@@ -7,7 +7,15 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.yahoo.hakunamatata.R;
+import com.yahoo.hakunamatata.lib.util;
+import com.yahoo.hakunamatata.models.FacebookPaging;
 import com.yahoo.hakunamatata.storage.Storage;
+
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jonaswu on 2015/8/29.
@@ -30,10 +38,22 @@ public class FacebookClient {
     }
 
     // RestClient.java
-    public void getPosts(AsyncHttpResponseHandler handler) {
+    public void getPosts(FacebookPaging facebookPaging, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl(String.format("%s/feed", groupId));
         RequestParams params = new RequestParams();
         params.put("fields", "type,id,message,from.fields(name, cover, picture)");
+        if (facebookPaging != null) {
+            Log.e("next", facebookPaging.next);
+            try {
+                Map<String, List<String>> query = util.splitQuery(new URL(facebookPaging.next));
+                params.put("__paging_token", query.get("__paging_token").get(0));
+                params.put("until", query.get("until").get(0));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
         getClient().get(apiUrl, decorateParams(params, "get"), handler);
     }
 
@@ -72,11 +92,11 @@ public class FacebookClient {
         String accessToken = Storage.read(context, context.getResources().getString(R.string.access_token), "");
         params.put("access_token", accessToken);
         params.put("debug", "all");
+        params.put("limit", context.getResources().getString(R.string.limit_of_api_return));
         params.put("format", "json");
         params.put("method", method);
         params.put("pretty", 0);
         params.put("suppress_http_code", 1);
-
         return params;
     }
 
