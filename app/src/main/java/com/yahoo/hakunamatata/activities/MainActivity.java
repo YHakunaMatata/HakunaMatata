@@ -36,20 +36,6 @@ public class MainActivity extends ActionBarActivity implements ListingFragment.O
         setUpActionBar();
         setUpPager();
 
-        FacebookClient client = RestApplication.getRestClient();
-        client.post("test from api",
-                new MyJsonHttpResponseHandler(this) {
-                    @Override
-                    public void successCallBack(int statusCode, Header[] headers, Object data) {
-                        JSONObject dataJSON = (JSONObject) data;
-                        Log.e("data", dataJSON.toString());
-                    }
-
-                    @Override
-                    public void errorCallBack() {
-
-                    }
-                });
     }
 
     private void setUpActionBar() {
