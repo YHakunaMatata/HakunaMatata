@@ -45,7 +45,7 @@ Detail Page
 GIF created with [Pencil](http://pencil.evolus.vn/).
 
 ## Walkthrough (Milestone)
-<img src='finaldemo.gif' title='finaldemo.gif' width='400px'  height='600px'  alt=''/>
+<img src='finaldemo.gif' title='finaldemo.gif' width='550px'  height='600px'  alt=''/>
 
 ## Developer setup
 * For Mac OSX, copy `key/debug.keystore` to `~/.android/`
