@@ -8,7 +8,7 @@
         android:onClick="onClickPost"
         android:orderInCategory="5"
         android:title="NEW POST"
-        app:showAsAction="ifRoom|collapseActionView"></item>
+        app:showAsAction="collapseActionView"></item>
 
     <item
         android:id="@+id/logout"
@@ -16,5 +16,5 @@
         android:onClick="logout"
         android:orderInCategory="5"
         android:title="logout"
-        app:showAsAction="ifRoom|collapseActionView"></item>
+        app:showAsAction="collapseActionView"></item>
 </menu>

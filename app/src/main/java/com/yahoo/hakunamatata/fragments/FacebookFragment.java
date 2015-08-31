@@ -9,21 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.yahoo.hakunamatata.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.MalformedURLException;
 import java.util.Arrays;
-import java.util.List;
 
 public class FacebookFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match

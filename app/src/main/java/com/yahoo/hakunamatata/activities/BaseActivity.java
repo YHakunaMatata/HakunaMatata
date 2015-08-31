@@ -2,6 +2,7 @@ package com.yahoo.hakunamatata.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -9,7 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.melnykov.fab.FloatingActionButton;
 import com.yahoo.hakunamatata.R;
+import com.yahoo.hakunamatata.fragments.SubmitFragment;
 import com.yahoo.hakunamatata.interfaces.Progressable;
 
 import is.arontibo.library.ElasticDownloadView;
@@ -18,7 +21,7 @@ import is.arontibo.library.ProgressDownloadView;
 /**
  * Created by jonaswu on 2015/8/30.
  */
-public abstract class BaseActivity extends AppCompatActivity implements Progressable {
+public abstract class BaseActivity extends AppCompatActivity implements Progressable, SubmitFragment.PostSuccessDelegator {
 
 
     private ElasticDownloadView mElasticDownloadView;
@@ -55,6 +58,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         rl = (RelativeLayout) findViewById(R.id.elastic_download_view_container);
         mElasticDownloadView = (ElasticDownloadView) findViewById(R.id.elastic_download_view);
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPostDialog();
+            }
+        });
     }
 
     @Override
@@ -92,5 +103,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void showPostDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        SubmitFragment alertDialog = SubmitFragment.newInstance(this);
+        alertDialog.show(fm, "filter");
     }
 }

@@ -3,6 +3,7 @@ package com.yahoo.hakunamatata.activities;
 import android.app.Application;
 import android.content.Context;
 
+import com.yahoo.hakunamatata.models.User;
 import com.yahoo.hakunamatata.network.FacebookClient;
 
 /**
@@ -10,6 +11,15 @@ import com.yahoo.hakunamatata.network.FacebookClient;
  */
 public class RestApplication extends Application {
     private static Context context;
+    private static User me;
+
+    public static User getMe() {
+        return me;
+    }
+
+    public static void setMe(User me) {
+        RestApplication.me = me;
+    }
 
     @Override
     public void onCreate() {

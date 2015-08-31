@@ -44,6 +44,8 @@ Detail Page
 <img src='wireframe-detail.png' title='wireframe-detail.png' width='400px'  height='600px'  alt='Tab_Pages.png' />
 GIF created with [Pencil](http://pencil.evolus.vn/).
 
+## Walkthrough (Milestone)
+<img src='finaldemo.gif' title='finaldemo.gif' width='400px'  height='600px'  alt=''/>
 
 ## Developer setup
 * For Mac OSX, copy `key/debug.keystore` to `~/.android/`

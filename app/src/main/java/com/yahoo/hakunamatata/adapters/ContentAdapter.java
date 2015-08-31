@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
-import com.yahoo.hakunamatata.element.Post;
+import com.yahoo.hakunamatata.models.Post;
 import com.yahoo.hakunamatata.lib.RoundedTransformation;
 
 import java.util.ArrayList;
@@ -19,9 +19,10 @@ import java.util.List;
 /**
  * Created by jonaswu on 2015/8/30.
  */
-public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.JokeHolder> {
+public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
+    private final int POST = 0, PHOTO = 1, VIDEO = 2;
     private List<Post> postList = new ArrayList<>();
     private Context context;
 
@@ -32,27 +33,123 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.JokeHold
 
 
     @Override
-    public JokeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.
-                from(parent.getContext()).
-                inflate(R.layout.joke_item, parent, false);
-        return new JokeHolder(itemView);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        RecyclerView.ViewHolder viewHolder = null;
+        View itemView;
+        switch (viewType) {
+            case POST:
+                itemView = LayoutInflater.
+                        from(parent.getContext()).
+                        inflate(R.layout.joke_item, parent, false);
+                viewHolder = new JokeHolder(itemView);
+                break;
+            case PHOTO:
+                itemView = LayoutInflater.
+                        from(parent.getContext()).
+                        inflate(R.layout.photo_item, parent, false);
+                viewHolder = new JokeHolder(itemView);
+                break;
+            default:
+                itemView = LayoutInflater.
+                        from(parent.getContext()).
+                        inflate(R.layout.joke_item, parent, false);
+                viewHolder = new JokeHolder(itemView);
+                break;
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(JokeHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         Post post = postList.get(position);
-        holder.userName.setText(post.from.name);
-        holder.message.setText(post.message);
-        Picasso.with(context)
-                .load(post.from.picture.url)
-                .transform(new RoundedTransformation(15, 1))
-                .error(R.drawable.images)
-                .placeholder(R.drawable.placeholder)
-                .centerInside()
-                .noFade()
-                .fit()
-                .into(holder.profileImage);
+        switch (viewHolder.getItemViewType()) {
+            case POST:
+                JokeHolder vh1 = (JokeHolder) viewHolder;
+                vh1.userName.setText(post.from.name);
+                vh1.message.setText(post.message);
+                Picasso.with(context)
+                        .load(post.from.picture.url)
+                        .transform(new RoundedTransformation(15, 1))
+                        .error(R.drawable.images)
+                        .placeholder(R.drawable.placeholder)
+                        .centerInside()
+                        .noFade()
+                        .fit()
+                        .into(vh1.profileImage);
+                vh1.like.setText(String.valueOf(post.likes.total_count));
+                break;
+            case PHOTO:
+                JokeHolder vh2 = (JokeHolder) viewHolder;
+                vh2.userName.setText(post.from.name);
+                Picasso.with(context)
+                        .load(post.from.picture.url)
+                        .transform(new RoundedTransformation(15, 1))
+                        .error(R.drawable.images)
+                        .placeholder(R.drawable.placeholder)
+                        .centerInside()
+                        .noFade()
+                        .fit()
+                        .into(vh2.profileImage);
+                vh2.like.setText(String.valueOf(post.likes.total_count));
+                Picasso.with(context)
+                        .load(post.picture)
+                        .transform(new RoundedTransformation(15, 1))
+                        .error(R.drawable.images)
+                        .placeholder(R.drawable.placeholder)
+                        .centerInside()
+                        .noFade()
+                        .fit()
+                        .into(vh2.image);
+                break;
+            case VIDEO:
+                JokeHolder vh3 = (JokeHolder) viewHolder;
+                vh3.userName.setText(post.from.name);
+                Picasso.with(context)
+                        .load(post.from.picture.url)
+                        .transform(new RoundedTransformation(15, 1))
+                        .error(R.drawable.images)
+                        .placeholder(R.drawable.placeholder)
+                        .centerInside()
+                        .noFade()
+                        .fit()
+                        .into(vh3.profileImage);
+                vh3.like.setText(String.valueOf(post.likes.total_count));
+                Picasso.with(context)
+                        .load(post.picture)
+                        .transform(new RoundedTransformation(15, 1))
+                        .error(R.drawable.images)
+                        .placeholder(R.drawable.placeholder)
+                        .centerInside()
+                        .noFade()
+                        .fit()
+                        .into(vh3.image);
+                vh3.image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        int returnType;
+        Post post = postList.get(position);
+        if (post.type.equals("photo")) {
+            returnType = PHOTO;
+        } else if (post.type.equals("status")) {
+            returnType = POST;
+        } else if (post.type.equals("videos")) {
+            returnType = POST;
+        } else {
+            returnType = -1;
+        }
+        return returnType;
     }
 
     @Override
@@ -72,6 +169,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.JokeHold
     }
 
     public static class JokeHolder extends RecyclerView.ViewHolder {
+        ImageView image;
+        TextView like;
         TextView userName;
         TextView message;
         ImageView profileImage;
@@ -81,6 +180,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.JokeHold
             userName = (TextView) view.findViewById(R.id.name);
             message = (TextView) view.findViewById(R.id.message);
             profileImage = (ImageView) view.findViewById(R.id.profile_image);
+            like = (TextView) view.findViewById(R.id.like);
+            image = (ImageView) view.findViewById(R.id.main_image);
         }
     }
 }

@@ -10,6 +10,8 @@
     <string name="login_label">Have fun</string>
     <string name="app_id">111031992582957</string>
     <string name="networkerror">please check your network status</string>
+    <string name="what_are_you_feeling">hahahhahahahahhahahahahhaha</string>
+    <string name="maxlenghtofatweet">140</string>
 
 
 </resources>

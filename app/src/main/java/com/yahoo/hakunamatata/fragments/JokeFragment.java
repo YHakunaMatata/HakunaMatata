@@ -17,10 +17,12 @@ import com.google.gson.JsonElement;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.RestApplication;
 import com.yahoo.hakunamatata.adapters.ContentAdapter;
-import com.yahoo.hakunamatata.element.Post;
 import com.yahoo.hakunamatata.interfaces.Progressable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
+import com.yahoo.hakunamatata.models.Deserializer;
 import com.yahoo.hakunamatata.models.FacebookPaging;
+import com.yahoo.hakunamatata.models.Post;
+import com.yahoo.hakunamatata.models.User;
 import com.yahoo.hakunamatata.network.FacebookClient;
 import com.yahoo.hakunamatata.network.MyJsonHttpResponseHandler;
 
@@ -123,16 +125,7 @@ public class JokeFragment extends Fragment {
             JSONArray dataArray = data.getJSONArray("data");
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject postJSON = dataArray.getJSONObject(i);
-                Gson gson = new GsonBuilder()
-                        .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                        .registerTypeAdapter(Post.From.Picture.class, new Post.Deserializer<Post.From.Picture>() {
-                            @Override
-                            public JsonElement getDeserializeData(JsonElement je) {
-                                return je.getAsJsonObject().get("data");
-                            }
-                        })
-                        .create();
-                Post post = gson.fromJson(postJSON.toString(), Post.class);
+                Post post = Post.fromJSON(postJSON.toString());
                 posts.add(post);
             }
 

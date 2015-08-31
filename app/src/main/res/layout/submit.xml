@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:weightSum="20">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="20dp"
+        android:layout_weight="4"
+        android:background="#f4f4f4"
+        android:layout_marginBottom="6dp">
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/user_profile_picture"
+            android:background="@drawable/image_round_corner"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_toRightOf="@+id/profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="chrisconnolly"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#191919"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/screenname"
+            android:layout_below="@+id/name"
+            android:layout_alignLeft="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@test"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:textColor="#626262" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:hint="@string/what_are_you_feeling"
+        android:lines="10"
+        android:gravity="top|left"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:layout_weight="15" />
+
+
+    <TextView
+        android:id="@+id/length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:layout_weight="1"
+        android:text="0/140" />
+</LinearLayout>

@@ -23,7 +23,7 @@ import java.util.Map;
 public class FacebookClient {
     public static FacebookClient facebookClient;
     public static String baseUrl = "https://graph.facebook.com/v2.4/";
-    public static String groupId = "173830556282081";
+    public static String groupId = "yhakunamatatagroup";
     public Context context;
 
     public static FacebookClient getInstance(Context context) {
@@ -41,7 +41,7 @@ public class FacebookClient {
     public void getPosts(FacebookPaging facebookPaging, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl(String.format("%s/feed", groupId));
         RequestParams params = new RequestParams();
-        params.put("fields", "type,id,message,from.fields(name, cover, picture)");
+        params.put("fields", "likes.summary(true),link,type,id,picture,message,from.fields(name, cover, picture)");
         if (facebookPaging != null) {
             Log.e("next", facebookPaging.next);
             try {
@@ -54,6 +54,14 @@ public class FacebookClient {
                 e.printStackTrace();
             }
         }
+        getClient().get(apiUrl, decorateParams(params, "get"), handler);
+    }
+
+    // RestClient.java
+    public void getMe(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("me");
+        RequestParams params = new RequestParams();
+        params.put("fields", "name,cover,picture");
         getClient().get(apiUrl, decorateParams(params, "get"), handler);
     }
 
