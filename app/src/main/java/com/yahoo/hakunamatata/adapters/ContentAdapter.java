@@ -1,6 +1,8 @@
 package com.yahoo.hakunamatata.adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +12,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
-import com.yahoo.hakunamatata.models.Post;
+import com.yahoo.hakunamatata.fragments.PlayerYouTubeFrag;
+import com.yahoo.hakunamatata.fragments.VideoFragment;
 import com.yahoo.hakunamatata.lib.RoundedTransformation;
+import com.yahoo.hakunamatata.models.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,12 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         inflate(R.layout.photo_item, parent, false);
                 viewHolder = new JokeHolder(itemView);
                 break;
+            case VIDEO:
+                itemView = LayoutInflater.
+                        from(parent.getContext()).
+                        inflate(R.layout.video_item, parent, false);
+                viewHolder = new JokeHolder(itemView);
+                break;
             default:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
@@ -62,7 +72,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        Post post = postList.get(position);
+        final Post post = postList.get(position);
         switch (viewHolder.getItemViewType()) {
             case POST:
                 JokeHolder vh1 = (JokeHolder) viewHolder;
@@ -127,7 +137,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 vh3.image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        showVideoDialog(post.link);
                     }
                 });
                 break;
@@ -144,8 +154,8 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             returnType = PHOTO;
         } else if (post.type.equals("status")) {
             returnType = POST;
-        } else if (post.type.equals("videos")) {
-            returnType = POST;
+        } else if (post.type.equals("video")) {
+            returnType = VIDEO;
         } else {
             returnType = -1;
         }
@@ -183,5 +193,11 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             like = (TextView) view.findViewById(R.id.like);
             image = (ImageView) view.findViewById(R.id.main_image);
         }
+    }
+
+    private void showVideoDialog(String url) {
+        FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
+        VideoFragment videoFragment = VideoFragment.newInstance(url, true);
+        videoFragment.show(fm, "fragment_edit_name");
     }
 }

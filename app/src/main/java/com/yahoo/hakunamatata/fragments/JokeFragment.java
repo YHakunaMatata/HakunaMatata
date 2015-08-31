@@ -13,16 +13,13 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.RestApplication;
 import com.yahoo.hakunamatata.adapters.ContentAdapter;
 import com.yahoo.hakunamatata.interfaces.Progressable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
-import com.yahoo.hakunamatata.models.Deserializer;
 import com.yahoo.hakunamatata.models.FacebookPaging;
 import com.yahoo.hakunamatata.models.Post;
-import com.yahoo.hakunamatata.models.User;
 import com.yahoo.hakunamatata.network.FacebookClient;
 import com.yahoo.hakunamatata.network.MyJsonHttpResponseHandler;
 
