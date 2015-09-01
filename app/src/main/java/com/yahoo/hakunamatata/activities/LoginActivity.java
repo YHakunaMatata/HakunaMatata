@@ -2,20 +2,14 @@ package com.yahoo.hakunamatata.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.fragments.FacebookFragment;
-import com.yahoo.hakunamatata.models.Deserializer;
-import com.yahoo.hakunamatata.models.Post;
 import com.yahoo.hakunamatata.models.User;
 import com.yahoo.hakunamatata.network.FacebookClient;
 import com.yahoo.hakunamatata.network.MyJsonHttpResponseHandler;
@@ -76,6 +70,12 @@ public class LoginActivity extends AppCompatActivity implements FacebookFragment
         getMe();
     }
 
+    public void navigateToGuideActivity() {
+        Intent i = new Intent(this, GuideActivity.class);
+        startActivity(i);
+        finish();
+    }
+
     public void navigateToMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookFragment
                 JSONObject dataJSON = (JSONObject) data;
                 User user = User.fromJSON(dataJSON.toString());
                 RestApplication.setMe(user);
-                navigateToMainActivity();
+                navigateToGuideActivity();
             }
 
             @Override
