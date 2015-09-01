@@ -1,3 +1,5 @@
 include ':app'
+include ':residemenu'
+project(':residemenu').projectDir = new File('residemenu')
 include ':facebook'
 project(':facebook').projectDir = new File('facebooksdk/facebook')
