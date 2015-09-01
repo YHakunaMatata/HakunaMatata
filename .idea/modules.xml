@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/HakunaMatata.iml" filepath="$PROJECT_DIR$/HakunaMatata.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebooksdk/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebooksdk/facebook/facebook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/residemenu/residemenu.iml" filepath="$PROJECT_DIR$/residemenu/residemenu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/residemenu/residemenu.iml" filepath="$PROJECT_DIR$/residemenu/residemenu.iml" />
     </modules>
   </component>
 </project>

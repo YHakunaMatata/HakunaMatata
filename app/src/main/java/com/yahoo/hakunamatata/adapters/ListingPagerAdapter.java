@@ -23,9 +23,9 @@ import java.util.Map;
  * Created by jonaswu on 2015/8/18.
  */
 public class ListingPagerAdapter extends FragmentPagerAdapter implements SmartTabLayout.TabProvider {
-    final int PAGE_COUNT = 1;
+    final int PAGE_COUNT = 2;
     private final FragmentManager fm;
-    private String tabTitles[] = new String[]{"JOKES", "IMAGES", "VIDEOS"};
+    private String tabTitles[] = new String[]{"JOKES", "FAVORITE"};
     private Map<Integer, Fragment> mFragmentTags = new HashMap<>();
 
     private final Context context;

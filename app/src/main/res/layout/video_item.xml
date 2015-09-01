@@ -87,7 +87,7 @@
                     android:layout_gravity="center"
                     android:alpha="0.5"
                     android:src="@drawable/play_icon"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
 
             </FrameLayout>
