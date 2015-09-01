@@ -13,6 +13,6 @@
     <string name="what_are_you_feeling">hahahhahahahahhahahahahhaha</string>
     <string name="maxlenghtofatweet">140</string>
     <string name="google_developer_key">AIzaSyBlDFaohXcFA-ZSJFrk63Y-eFnDi5JZB0I</string>
-
+    <string name="title_activity_guide">GuideActivity</string>
 
 </resources>

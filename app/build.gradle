@@ -44,4 +44,8 @@ dependencies {
     compile 'com.github.tibolte:elasticdownload:1.0.+'
     compile project(':facebook')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
+
+    // SpringIndicator: a view pager indicator material
+    compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
+    compile 'com.github.chenupt.android:multiplemodel:1.1.0@aar'
 }
