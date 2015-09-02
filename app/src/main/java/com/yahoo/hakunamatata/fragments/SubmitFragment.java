@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.RestApplication;
 import com.yahoo.hakunamatata.interfaces.Progressable;
+import com.yahoo.hakunamatata.interfaces.Reloadable;
 import com.yahoo.hakunamatata.models.User;
 import com.yahoo.hakunamatata.network.FacebookClient;
 import com.yahoo.hakunamatata.network.MyJsonHttpResponseHandler;
@@ -68,18 +69,13 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
     private ImageView ivCaptureBtn;
     private PostSuccessDelegator postSuccessDelegator;
     private Progressable progressable;
+    private Reloadable reloadableActivity;
 
-    public static SubmitFragment newInstance(PostSuccessDelegator postSuccessDelegator) {
+    public static SubmitFragment newInstance(Reloadable reloadableActivity) {
         SubmitFragment frag = new SubmitFragment();
-        frag.setPostSuccessDelegator(postSuccessDelegator);
-        frag.setProgressableDelegator((Progressable) (postSuccessDelegator));
+        frag.reloadableActivity = reloadableActivity;
         return frag;
     }
-
-    private void setProgressableDelegator(Progressable progressable) {
-        this.progressable = progressable;
-    }
-
 
     public void onCapture(View view) {
         // create Intent to take a picture and return control to the calling application
@@ -142,6 +138,10 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
         return false;
     }
 
+    private void reload() {
+        reloadableActivity.reload();
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -184,7 +184,7 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 FacebookClient client = RestApplication.getRestClient();
-                                progressable.setBusy();
+                                // progressable.setBusy();
                                 if (photoForUpload != null) {
                                     client.postPhoto(
                                             body.getText().toString(),
@@ -196,8 +196,9 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
                                                     //check graphResponse for success or failure
                                                     if (graphResponse.getError() == null) {
                                                         Log.d("my", "Success: " + graphResponse.toString());
-                                                        postSuccessDelegator.postSuccess();
-                                                        progressable.setFinish();
+                                                        reload();
+                                                        // postSuccessDelegator.postSuccess();
+                                                        // progressable.setFinish();
                                                     } else {
                                                         Log.d("my", "Post photo fail: " + graphResponse.toString());
                                                     }
@@ -210,8 +211,9 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
                                                 @Override
                                                 public void successCallBack(int statusCode, Header[] headers, Object data) {
                                                     Log.d("my", data.toString());
-                                                    postSuccessDelegator.postSuccess();
-                                                    progressable.setFinish();
+                                                    reload();
+                                                    // postSuccessDelegator.postSuccess();
+                                                    // progressable.setFinish();
                                                 }
 
                                                 @Override

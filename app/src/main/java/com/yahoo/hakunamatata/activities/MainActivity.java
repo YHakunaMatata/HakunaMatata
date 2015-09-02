@@ -1,7 +1,10 @@
 package com.yahoo.hakunamatata.activities;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
@@ -11,11 +14,13 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.adapters.ListingPagerAdapter;
 import com.yahoo.hakunamatata.fragments.SubmitFragment;
+import com.yahoo.hakunamatata.interfaces.Reloadable;
 import com.yahoo.hakunamatata.storage.Storage;
 
+import java.io.IOException;
 
 
-public class MainActivity extends BaseActivity implements SubmitFragment.PostSuccessDelegator {
+public class MainActivity extends BaseActivity implements SubmitFragment.PostSuccessDelegator  {
     private ListingPagerAdapter adapter;
     private ViewPager viewPager;
     private SmartTabLayout viewPagerTab;
@@ -33,7 +38,6 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         setUpPager();
         setUpMenu();
     }
-
 
     private void setUpPager() {
         adapter = new ListingPagerAdapter(
@@ -95,4 +99,9 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
 
     }
 
+    @Override
+    public void reload() {
+        int currentPage = viewPager.getCurrentItem();
+        ((Reloadable) adapter.getFragment(currentPage)).reload();
+    }
 }

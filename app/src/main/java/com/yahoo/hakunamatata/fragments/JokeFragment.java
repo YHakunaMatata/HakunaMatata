@@ -17,6 +17,7 @@ import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.RestApplication;
 import com.yahoo.hakunamatata.adapters.ContentAdapter;
 import com.yahoo.hakunamatata.interfaces.Progressable;
+import com.yahoo.hakunamatata.interfaces.Reloadable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
 import com.yahoo.hakunamatata.models.FacebookPaging;
 import com.yahoo.hakunamatata.models.Post;
@@ -31,7 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JokeFragment extends Fragment {
+public class JokeFragment extends Fragment implements Reloadable {
 
     private ContentAdapter contentAdapter;
     private Progressable progressable;
@@ -159,5 +160,10 @@ public class JokeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         progressable = null;
+    }
+
+    @Override
+    public void reload() {
+        initData(true);
     }
 }
