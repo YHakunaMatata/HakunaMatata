@@ -1,5 +1,7 @@
 include ':app'
 include ':residemenu'
+include ':DaoGenerator'
 project(':residemenu').projectDir = new File('residemenu')
 include ':facebook'
 project(':facebook').projectDir = new File('facebooksdk/facebook')
+project(':DaoGenerator').projectDir = new File('MyDaoGenerator')

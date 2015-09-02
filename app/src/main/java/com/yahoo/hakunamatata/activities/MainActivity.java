@@ -14,7 +14,6 @@ import com.yahoo.hakunamatata.fragments.SubmitFragment;
 import com.yahoo.hakunamatata.storage.Storage;
 
 
-
 public class MainActivity extends BaseActivity implements SubmitFragment.PostSuccessDelegator {
     private ListingPagerAdapter adapter;
     private ViewPager viewPager;

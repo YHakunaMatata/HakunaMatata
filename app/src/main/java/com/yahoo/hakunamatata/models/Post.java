@@ -18,7 +18,7 @@ public class Post {
     public static Post fromJSON(String data) {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .registerTypeAdapter(User.Picture.class, new Deserializer<User.Picture>() {
+                .registerTypeAdapter(Picture.class, new Deserializer<Picture>() {
                     @Override
                     public JsonElement getDeserializeData(JsonElement je) {
                         return je.getAsJsonObject().get("data");

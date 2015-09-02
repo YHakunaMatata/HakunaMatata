@@ -3,7 +3,6 @@ package com.yahoo.hakunamatata.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,21 +30,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JokeFragment extends Fragment {
-
+/**
+ * Created by jonaswu on 2015/9/2.
+ */
+public class FavoriteFragment extends Fragment {
     private JokeContentAdapter contentAdapter;
     private Progressable progressable;
-    private SwipeRefreshLayout swipeContainer;
     private FacebookPaging facebookPaging;
     private LinearLayoutManager llm;
 
-    public static JokeFragment newInstance() {
-        JokeFragment fragment = new JokeFragment();
+    public static FavoriteFragment newInstance() {
+        FavoriteFragment fragment = new FavoriteFragment();
         Bundle args = new Bundle();
         return fragment;
     }
 
-    public JokeFragment() {
+    public FavoriteFragment() {
     }
 
     @Override
@@ -57,18 +57,7 @@ public class JokeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_joke, container, false);
-
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
-        // swipeContainer.setColorSchemeColors(0, 0, 0, 0);
-        swipeContainer.setProgressBackgroundColor(android.R.color.transparent);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                JokeFragment.this.initData(true);
-            }
-        });
+        View view = inflater.inflate(R.layout.fragment_favorite, container, false);
 
         RecyclerView recList = (RecyclerView) view.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
@@ -105,7 +94,6 @@ public class JokeFragment extends Fragment {
                 Log.e("data", data.toString());
                 JSONObject dataJSON = (JSONObject) data;
                 bindToAdapter(dataJSON);
-                swipeContainer.setRefreshing(false);
                 progressable.setFinish();
             }
 

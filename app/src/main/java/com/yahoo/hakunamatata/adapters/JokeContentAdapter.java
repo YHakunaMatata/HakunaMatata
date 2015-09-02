@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by jonaswu on 2015/8/30.
  */
-public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class JokeContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private final int POST = 0, PHOTO = 1, VIDEO = 2, LINK = 3;
@@ -31,7 +31,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Context context;
 
 
-    public ContentAdapter(Context context) {
+    public JokeContentAdapter(Context context) {
         this.context = context;
     }
 
@@ -111,6 +111,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             .fit()
                             .into(vh2.profileImage);
                     vh2.like.setText(String.valueOf(post.likes.total_count));
+                    vh2.message.setText(post.message);
                     Picasso.with(context)
                             .load(post.picture)
                             .transform(new RoundedTransformation(15, 1))
@@ -124,6 +125,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 case LINK:
                     JokeHolder vh3 = (JokeHolder) viewHolder;
                     vh3.userName.setText(post.from.name);
+                    vh3.message.setText(post.message);
                     Picasso.with(context)
                             .load(post.from.picture.url)
                             .transform(new RoundedTransformation(15, 1))

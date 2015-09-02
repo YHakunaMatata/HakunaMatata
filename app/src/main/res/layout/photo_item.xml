@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/profile_image"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="18dp"
             android:layout_toRightOf="@+id/profile_image"
             android:ellipsize="end"
             android:maxEms="5"
@@ -55,11 +56,25 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <com.yahoo.hakunamatata.view.LinkifiedTextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/profile_image"
+            android:layout_below="@+id/profile_image"
+            android:layout_marginTop="10dp"
+            android:autoLink="all"
+            android:linksClickable="true"
+            android:text="comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+
         <RelativeLayout
             android:id="@+id/main_image_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/profile_image"
+            android:layout_below="@id/message"
             android:padding="0dp">
 
             <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.yahoo.hakunamatata.R;
+import com.yahoo.hakunamatata.fragments.FavoriteFragment;
 import com.yahoo.hakunamatata.fragments.JokeFragment;
 
 import java.util.HashMap;
@@ -64,10 +65,7 @@ public class ListingPagerAdapter extends FragmentPagerAdapter implements SmartTa
                 frag = JokeFragment.newInstance();
                 break;
             case 1:
-                frag = JokeFragment.newInstance();
-                break;
-            case 2:
-                frag = JokeFragment.newInstance();
+                frag = FavoriteFragment.newInstance();
                 break;
             default:
                 frag = JokeFragment.newInstance();
