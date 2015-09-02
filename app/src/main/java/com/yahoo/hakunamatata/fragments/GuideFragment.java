@@ -51,10 +51,20 @@ public class GuideFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        imageView = (ImageView) getView().findViewById(R.id.image);
-        Picasso.with(getActivity().getBaseContext())
-                .load(bgRes)
-                .into(imageView);
+        if (bgRes == R.drawable.gd4) {
+            getView().findViewById(R.id.image).setVisibility(View.GONE);
+            getView().findViewById(R.id.youtubeplayerfragment_container).setVisibility(View.VISIBLE);
+            PlayerYouTubeFrag youTubePlayerFragment = PlayerYouTubeFrag.newInstance("https://www.youtube.com/watch?v=VPRuL9ACZeM");
+            getChildFragmentManager().beginTransaction().add(R.id.youtubeplayerfragment_container, youTubePlayerFragment).commit();
+            getChildFragmentManager().executePendingTransactions();
+            youTubePlayerFragment.init();
+        } else {
+            imageView = (ImageView) getView().findViewById(R.id.image);
+            Picasso.with(getActivity().getBaseContext())
+                    .load(bgRes)
+                    .into(imageView);
+        }
+
         //imageView.setBackgroundResource(bgRes);
     }
 }
