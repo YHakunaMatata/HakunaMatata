@@ -125,12 +125,12 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 // resize
-                Bitmap bMapScaled = Bitmap.createScaledBitmap(takenImage, 900, 600, true);
+                // Bitmap bMapScaled = Bitmap.createScaledBitmap(takenImage, 900, 600, true);
 
                 // Load the taken image into a preview
-                ivPreview.setImageBitmap(bMapScaled);
+                ivPreview.setImageBitmap(takenImage);
                 ivPreview.setVisibility(View.VISIBLE);
-                photoForUpload = convertBitmap2BiteAry(bMapScaled);
+                photoForUpload = convertBitmap2BiteAry(takenImage);
 
             } else { // Result was a failure
                 Log.d("my", "capture fail");
