@@ -1,4 +1,4 @@
-package com.yahoo.hakunamatata.lib;
+package com.yahoo.hakunamatata.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import com.yahoo.hakunamatata.lib.MutableForegroundColorSpan;
 
 
 public class SecretTextView extends TextView {

@@ -12,7 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.yahoo.hakunamatata.R;
-import com.yahoo.hakunamatata.lib.SecretTextView;
+import com.yahoo.hakunamatata.view.SecretTextView;
 
 public class AboutFragment extends DialogFragment {
     SecretTextView secretTextView;

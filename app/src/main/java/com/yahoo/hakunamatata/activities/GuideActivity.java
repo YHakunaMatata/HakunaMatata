@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.fragments.GuideFragment;
+import com.yahoo.hakunamatata.lib.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,13 +58,10 @@ public class GuideActivity extends AppCompatActivity {
         springIndicator.setViewPager(viewPager);
 
         // play laugh sound
-        startMyAudioFile();
+        util.startMyAudioFile(this);
     }
 
-    private void startMyAudioFile() {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.laugh);
-        mediaPlayer.start();
-    }
+
 
     private List<String> getTitles(){
         ArrayList<String> al = new ArrayList<>();
