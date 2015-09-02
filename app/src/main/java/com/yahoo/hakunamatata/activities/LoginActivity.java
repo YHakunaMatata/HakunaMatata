@@ -1,7 +1,6 @@
 package com.yahoo.hakunamatata.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,13 +21,12 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity implements FacebookFragment.oauthCallBack {
 
     private FacebookFragment facebookFragment;
-    private SharedPreferences settings;
+
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this);
-        settings = getSharedPreferences("HakunaMatata", 0);
 
         if (savedInstanceState == null) {
             // Add the fragment on initial activity setup
@@ -73,12 +71,6 @@ public class LoginActivity extends AppCompatActivity implements FacebookFragment
         getMe();
     }
 
-    public void navigateToGuideActivity() {
-        Intent i = new Intent(this, GuideActivity.class);
-        startActivity(i);
-        finish();
-    }
-
     public void navigateToMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
@@ -98,15 +90,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookFragment
                 JSONObject dataJSON = (JSONObject) data;
                 User user = User.fromJSON(dataJSON.toString());
                 RestApplication.setMe(user);
-
-                // SharedPreference->HakunaMatata->isFirstLaunch
-                // User will be direct to guide activity only when the first time launch the app.
-                if(settings.getBoolean("isFirstLaunch", true)) {
-                    navigateToGuideActivity();
-                } else {
-                    navigateToMainActivity();
-                }
-
+                navigateToMainActivity();
             }
 
             @Override

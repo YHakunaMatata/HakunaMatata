@@ -31,14 +31,20 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
     private Context mContext;
     private ResideMenu resideMenu;
     private ResideMenuItem menuItemGuide;
-    private ResideMenuItem itemProfile;
-    private ResideMenuItem itemCalendar;
-    private ResideMenuItem itemSettings;
+    private ResideMenuItem menuItemAbout;
+    private ResideMenuItem menuItemSetting;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // SharedPreference->HakunaMatata->isFirstLaunch
+        // User will be direct to guide activity only when the first time launch the app.
+        if(getSharedPreferences("HakunaMatata", 0).getBoolean("isFirstLaunch", true)) {
+            navigateToGuideActivity();
+        }
+
         mContext = this;
         setUpPager();
         setUpMenu();
@@ -69,16 +75,14 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         resideMenu.setScaleValue(0.6f);
 
         // create menu items;
-        menuItemGuide = new ResideMenuItem(this, R.drawable.icon_home, "Guide");
-        itemProfile = new ResideMenuItem(this, R.drawable.icon_profile, "Gallery");
-        itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
-        itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
+        menuItemGuide = new ResideMenuItem(this, R.drawable.ic_guide, "Guide");
+        menuItemAbout = new ResideMenuItem(this, R.drawable.ic_about, "About us");
+        menuItemSetting = new ResideMenuItem(this, R.drawable.ic_setting, "Setting");
 
 
         resideMenu.addMenuItem(menuItemGuide, ResideMenu.DIRECTION_RIGHT);
-        resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_RIGHT);
-        resideMenu.addMenuItem(itemCalendar, ResideMenu.DIRECTION_RIGHT);
-        resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(menuItemAbout, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(menuItemSetting, ResideMenu.DIRECTION_RIGHT);
 
         // You can disable a direction by setting ->
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
@@ -86,13 +90,16 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         menuItemGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext, GuideActivity.class);
-                startActivity(i);
-                finish();
+                navigateToGuideActivity();
             }
         });
     }
 
+    private void navigateToGuideActivity() {
+        Intent i = new Intent(this, GuideActivity.class);
+        startActivity(i);
+        finish();
+    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
