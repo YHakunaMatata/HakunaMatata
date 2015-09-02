@@ -16,6 +16,7 @@
 
 package com.yahoo.hakunamatata.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
@@ -53,11 +56,22 @@ public class GuideFragment extends Fragment {
 
         if (bgRes == R.drawable.gd4) {
             getView().findViewById(R.id.image).setVisibility(View.GONE);
-            getView().findViewById(R.id.youtubeplayerfragment_container).setVisibility(View.VISIBLE);
-            PlayerYouTubeFrag youTubePlayerFragment = PlayerYouTubeFrag.newInstance("https://www.youtube.com/watch?v=VPRuL9ACZeM");
-            getChildFragmentManager().beginTransaction().add(R.id.youtubeplayerfragment_container, youTubePlayerFragment).commit();
-            getChildFragmentManager().executePendingTransactions();
-            youTubePlayerFragment.init();
+            // getView().findViewById(R.id.youtubeplayerfragment_container).setVisibility(View.VISIBLE);
+            VideoView videoView = (VideoView) getView().findViewById(R.id.videoview);
+            getView().findViewById(R.id.image).setVisibility(View.GONE);
+            videoView.setVisibility(View.VISIBLE);
+            //if you want the controls to appear
+            videoView.setMediaController(new MediaController(getActivity()));
+            Uri video = Uri.parse("android.resource://" + getActivity().getPackageName() + "/"
+                    + R.raw.lionlaughhahahaha); //do not add any extension
+//if your file is named sherif.mp4 and placed in /raw
+//use R.raw.sherif
+            videoView.setVideoURI(video);
+            videoView.start();
+//            PlayerYouTubeFrag youTubePlayerFragment = PlayerYouTubeFrag.newInstance("https://www.youtube.com/watch?v=VPRuL9ACZeM");
+//            getChildFragmentManager().beginTransaction().add(R.id.youtubeplayerfragment_container, youTubePlayerFragment).commit();
+//            getChildFragmentManager().executePendingTransactions();
+//            youTubePlayerFragment.init();
         } else {
             imageView = (ImageView) getView().findViewById(R.id.image);
             Picasso.with(getActivity().getBaseContext())
