@@ -77,6 +77,8 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder = new JokeHolder(itemView);
                 break;
         }
+        itemView.setAlpha(0);
+        itemView.animate().setDuration(1000).alpha(1);
         return viewHolder;
     }
 
