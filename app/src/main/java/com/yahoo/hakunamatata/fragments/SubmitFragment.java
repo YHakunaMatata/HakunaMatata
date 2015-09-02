@@ -238,6 +238,7 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
                             }
                     );
                 }
+                dismiss();
             }
         });
 

@@ -114,13 +114,9 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             .into(vh2.profileImage);
                     vh2.like.setText(String.valueOf(post.likes.total_count));
                     Picasso.with(context)
-                            .load(post.picture)
-                            .transform(new RoundedTransformation(15, 1))
+                            .load(post.full_picture)
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
-                            .centerInside()
-                            .noFade()
-                            .fit()
                             .into(vh2.image);
                     break;
                 case LINK:
@@ -137,13 +133,9 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             .into(vh3.profileImage);
                     vh3.like.setText(String.valueOf(post.likes.total_count));
                     Picasso.with(context)
-                            .load(post.picture)
-                            .transform(new RoundedTransformation(15, 1))
+                            .load(post.full_picture)
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
-                            .centerInside()
-                            .noFade()
-                            .fit()
                             .into(vh3.image);
                     break;
                 case VIDEO:
@@ -160,13 +152,10 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             .into(vh4.profileImage);
                     vh4.like.setText(String.valueOf(post.likes.total_count));
                     Picasso.with(context)
-                            .load(post.picture)
+                            .load(post.full_picture)
                             .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
-                            .centerInside()
-                            .noFade()
-                            .fit()
                             .into(vh4.image);
                     vh4.image.setOnClickListener(new View.OnClickListener() {
                         @Override

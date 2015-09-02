@@ -14,6 +14,7 @@ public class Post {
     public String message;
     public String type;
     public String picture;
+    public String full_picture;
     public String link;
 
     public static Post fromJSON(String data) {
