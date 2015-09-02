@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.RestApplication;
-import com.yahoo.hakunamatata.adapters.ContentAdapter;
+import com.yahoo.hakunamatata.adapters.JokeContentAdapter;
 import com.yahoo.hakunamatata.interfaces.Progressable;
 import com.yahoo.hakunamatata.interfaces.Reloadable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
@@ -32,9 +32,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JokeFragment extends Fragment implements Reloadable {
+public class JokeFragment extends BaseFragment implements Reloadable {
 
-    private ContentAdapter contentAdapter;
+    private JokeContentAdapter contentAdapter;
     private Progressable progressable;
     private SwipeRefreshLayout swipeContainer;
     private FacebookPaging facebookPaging;
@@ -71,12 +71,12 @@ public class JokeFragment extends Fragment implements Reloadable {
             }
         });
 
+
         RecyclerView recList = (RecyclerView) view.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-
 
         recList.setOnScrollListener(new EndlessRecyclerOnScrollListener(llm) {
             @Override
@@ -87,7 +87,7 @@ public class JokeFragment extends Fragment implements Reloadable {
             }
         });
 
-        contentAdapter = new ContentAdapter(getActivity());
+        contentAdapter = new JokeContentAdapter(getActivity());
         recList.setAdapter(contentAdapter);
         initData(true);
         return view;

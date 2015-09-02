@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="robotium-core-1.8.0-beta-2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jayway.android.robotium/robotium-core/1.8.0-beta-2/c707ad54afcd84cd6bebc85b361e589118d971e1/robotium-core-1.8.0-beta-2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jayway.android.robotium/robotium-core/1.8.0-beta-2/68aaf6e2c895aa1673bca146436d0e1c1bd82f82/robotium-core-1.8.0-beta-2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

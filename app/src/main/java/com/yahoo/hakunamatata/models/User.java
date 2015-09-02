@@ -8,9 +8,6 @@ import com.google.gson.JsonElement;
  * Created by jonaswu on 2015/8/31.
  */
 public class User {
-    public static class Picture {
-        public String url;
-    }
 
     public String id;
     public String name;
@@ -19,7 +16,7 @@ public class User {
     public static User fromJSON(String data) {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .registerTypeAdapter(User.Picture.class, new Deserializer<User.Picture>() {
+                .registerTypeAdapter(Picture.class, new Deserializer<Picture>() {
                     @Override
                     public JsonElement getDeserializeData(JsonElement je) {
                         return je.getAsJsonObject().get("data");

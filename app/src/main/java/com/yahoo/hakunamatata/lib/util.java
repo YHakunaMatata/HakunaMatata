@@ -1,12 +1,29 @@
 package com.yahoo.hakunamatata.lib;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Parcelable;
+import android.view.View;
+
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.OnClickWrapper;
+import com.github.johnpersano.supertoasts.util.Style;
+import com.yahoo.hakunamatata.R;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,5 +55,44 @@ public class util {
             return matcher.group();
         }
         return "";
+    }
+
+
+    public static String displayTimeToTweet(Date date) {
+        return new SimpleDateFormat("hh:mm a dd MMM yy").format(date);
+    }
+
+    public static String getBestTimeDiff(Date targetTime) {
+        Date currentTime = new Date();
+        String display;
+        long day = TimeUnit.MILLISECONDS.toHours(currentTime.getTime() - targetTime.getTime());
+        long hour = TimeUnit.MILLISECONDS.toHours(currentTime.getTime() - targetTime.getTime());
+        long minute = TimeUnit.MILLISECONDS.toMinutes(currentTime.getTime() - targetTime.getTime());
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(currentTime.getTime() - targetTime.getTime());
+        display = String.valueOf(day) + "d";
+        if (hour < 24) {
+            display = String.valueOf(hour) + "h";
+        }
+        if (minute < 60) {
+            display = String.valueOf(minute) + "m";
+        }
+        if (seconds < 60) {
+            display = String.valueOf(seconds) + "s";
+        }
+        return display;
+    }
+
+    public static Date getDateFromString(String date) throws ParseException {
+        // String date example: "Mon Sep 03 13:24:14 +0000 2012"
+        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss Z yyyy", Locale.ENGLISH);
+        Date result = df.parse(date);
+        return result;
+    }
+
+    public static void showToast(Context ctx, String message) {
+        Style style = Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN);
+        style.textColor = ctx.getResources().getColor(R.color.brown);
+        SuperToast.create(ctx, message, SuperToast.Duration.LONG,
+                Style.getStyle(Style.ORANGE, SuperToast.Animations.FLYIN)).show();
     }
 }

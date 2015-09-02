@@ -38,7 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
     public void onResume() {
         super.onResume();
         setUpActionBar();
-        setBusy();
+        rl.setVisibility(View.GONE);
     }
 
     @Override

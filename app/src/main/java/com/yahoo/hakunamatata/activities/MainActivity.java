@@ -1,12 +1,8 @@
 package com.yahoo.hakunamatata.activities;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,14 +14,12 @@ import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.adapters.ListingPagerAdapter;
 import com.yahoo.hakunamatata.fragments.SubmitFragment;
 import com.yahoo.hakunamatata.interfaces.Reloadable;
+import com.yahoo.hakunamatata.pager.CustomViewPager;
 import com.yahoo.hakunamatata.storage.Storage;
 
-import java.io.IOException;
-
-
-public class MainActivity extends BaseActivity implements SubmitFragment.PostSuccessDelegator  {
+public class MainActivity extends BaseActivity implements SubmitFragment.PostSuccessDelegator {
     private ListingPagerAdapter adapter;
-    private ViewPager viewPager;
+    private CustomViewPager viewPager;
     private SmartTabLayout viewPagerTab;
 
     private Context mContext;
@@ -41,7 +35,7 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
 
         // SharedPreference->HakunaMatata->isFirstLaunch
         // User will be direct to guide activity only when the first time launch the app.
-        if(getSharedPreferences("HakunaMatata", 0).getBoolean("isFirstLaunch", true)) {
+        if (getSharedPreferences("HakunaMatata", 0).getBoolean("isFirstLaunch", true)) {
             navigateToGuideActivity();
         }
 
@@ -55,12 +49,13 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
                 getSupportFragmentManager(),
                 this
         );
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (CustomViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
 
         viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
         viewPagerTab.setCustomTabView(adapter);
         viewPagerTab.setViewPager(viewPager);
+        viewPager.addOnPageChangeListener(adapter);
     }
 
     private void setUpMenu() {
