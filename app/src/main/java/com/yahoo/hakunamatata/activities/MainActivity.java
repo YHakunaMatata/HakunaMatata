@@ -3,6 +3,7 @@ package com.yahoo.hakunamatata.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.dk.view.folder.ResideMenuItem;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.adapters.ListingPagerAdapter;
+import com.yahoo.hakunamatata.fragments.AboutFragment;
 import com.yahoo.hakunamatata.fragments.SubmitFragment;
 import com.yahoo.hakunamatata.interfaces.Reloadable;
 import com.yahoo.hakunamatata.pager.CustomViewPager;
@@ -82,6 +84,13 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         // You can disable a direction by setting ->
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
 
+        menuItemAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AboutFragment aboutFragment = AboutFragment.newInstance();
+                aboutFragment.show(((BaseActivity) mContext).getSupportFragmentManager(), "about dialog");
+            }
+        });
         menuItemGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
