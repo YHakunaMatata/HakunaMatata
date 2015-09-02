@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.fragments.GuideFragment;
@@ -43,6 +44,14 @@ public class GuideActivity extends AppCompatActivity {
         ModelPagerAdapter adapter = new ModelPagerAdapter(getSupportFragmentManager(), manager);
         viewPager.setAdapter(adapter);
         viewPager.fixScrollSpeed();
+
+        TextView skipButton = (TextView) findViewById(R.id.skipBtn);
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSkipGuide(view);
+            }
+        });
 
         // just set viewPager
         springIndicator.setViewPager(viewPager);
