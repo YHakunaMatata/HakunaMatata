@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 public class Post {
     public Like likes;
     public User from;
+    public String id;
     public String message;
     public String type;
     public String picture;

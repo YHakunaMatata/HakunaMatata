@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
+import com.yahoo.hakunamatata.activities.BaseActivity;
+import com.yahoo.hakunamatata.fragments.ReplyFragment;
 import com.yahoo.hakunamatata.fragments.VideoFragment;
 import com.yahoo.hakunamatata.lib.RoundedTransformation;
 import com.yahoo.hakunamatata.models.Post;
@@ -176,6 +178,19 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 default:
                     break;
             }
+
+            // bind replay button
+            ImageView replyBtn = ((JokeHolder) viewHolder).replyBtn;
+            if (replyBtn != null) {
+                replyBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showReplyDialog(post);
+                    }
+                });
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -197,6 +212,11 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             returnType = -1;
         }
         return returnType;
+    }
+
+    private void showReplyDialog(Post post) {
+        ReplyFragment replyFragment = ReplyFragment.newInstance(post);
+        replyFragment.show(((BaseActivity)context).getSupportFragmentManager(), "reply dialog");
     }
 
     @Override
@@ -221,6 +241,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView userName;
         TextView message;
         ImageView profileImage;
+        ImageView replyBtn;
 
         public JokeHolder(View view) {
             super(view);
@@ -229,6 +250,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             profileImage = (ImageView) view.findViewById(R.id.profile_image);
             like = (TextView) view.findViewById(R.id.like);
             image = (ImageView) view.findViewById(R.id.main_image);
+            replyBtn = (ImageView) view.findViewById(R.id.reply);
         }
     }
 
