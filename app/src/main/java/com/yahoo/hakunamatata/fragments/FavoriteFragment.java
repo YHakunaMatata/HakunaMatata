@@ -16,6 +16,7 @@ import com.yahoo.hakunamatata.dao.Post;
 import com.yahoo.hakunamatata.dao.PostDao;
 import com.yahoo.hakunamatata.interfaces.Progressable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
+import com.yahoo.hakunamatata.lib.util;
 import com.yahoo.hakunamatata.models.FacebookPaging;
 
 import java.util.List;
@@ -74,6 +75,8 @@ public class FavoriteFragment extends BaseFragment {
                         ).buildDelete().executeDeleteWithoutDetachingEntities();
                         daoSession.clear();
                         favoriteContentAdapter.notifyDataSetChanged();
+                        util.showToast(getActivity(), getActivity().getResources().getString(R.string.delete_success));
+
                     }
                 })
                 .setIsVertical(false)

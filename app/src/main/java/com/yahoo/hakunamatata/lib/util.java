@@ -1,5 +1,16 @@
 package com.yahoo.hakunamatata.lib;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Parcelable;
+import android.view.View;
+
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.OnClickWrapper;
+import com.github.johnpersano.supertoasts.util.Style;
+import com.yahoo.hakunamatata.R;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -76,5 +87,12 @@ public class util {
         DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss Z yyyy", Locale.ENGLISH);
         Date result = df.parse(date);
         return result;
+    }
+
+    public static void showToast(Context ctx, String message) {
+        Style style = Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN);
+        style.textColor = ctx.getResources().getColor(R.color.brown);
+        SuperToast.create(ctx, message, SuperToast.Duration.LONG,
+                Style.getStyle(Style.ORANGE, SuperToast.Animations.FLYIN)).show();
     }
 }

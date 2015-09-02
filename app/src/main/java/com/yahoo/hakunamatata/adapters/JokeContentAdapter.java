@@ -14,6 +14,7 @@ import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.BaseActivity;
 import com.yahoo.hakunamatata.fragments.ReplyFragment;
 import com.yahoo.hakunamatata.lib.RoundedTransformation;
+import com.yahoo.hakunamatata.lib.util;
 import com.yahoo.hakunamatata.models.Post;
 
 /**
@@ -101,6 +102,8 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                 postToDB.setLike(like);
                 postDao.insert(postToDB);
 
+                util.showToast(context, context.getResources().getString(R.string.add_to_favoraite_success));
+
             }
         });
         try {
@@ -135,12 +138,9 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                     vh2.like.setText(String.valueOf(post.likes.total_count));
                     vh2.message.setText(post.message);
                     Picasso.with(context)
-                            .load(post.picture)
+                            .load(post.full_picture)
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
-                            .centerInside()
-                            .noFade()
-                            .fit()
                             .into(vh2.image);
                     break;
                 case LINK:
@@ -158,12 +158,9 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                             .into(vh3.profileImage);
                     vh3.like.setText(String.valueOf(post.likes.total_count));
                     Picasso.with(context)
-                            .load(post.picture)
+                            .load(post.full_picture)
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
-                            .centerInside()
-                            .noFade()
-                            .fit()
                             .into(vh3.image);
                     break;
                 case VIDEO:
@@ -180,12 +177,9 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                             .into(vh4.profileImage);
                     vh4.like.setText(String.valueOf(post.likes.total_count));
                     Picasso.with(context)
-                            .load(post.picture)
+                            .load(post.full_picture)
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
-                            .centerInside()
-                            .noFade()
-                            .fit()
                             .into(vh4.image);
                     vh4.image.setOnClickListener(new OnClickListener() {
                         @Override

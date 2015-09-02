@@ -15,6 +15,7 @@ public class Post {
     private String message;
     private String type;
     private String picture;
+    private String full_picture;
     private String link;
     private Long postUserIdMapping;
     private Long postLikeIdMapping;
@@ -39,13 +40,14 @@ public class Post {
         this.internalId = internalId;
     }
 
-    public Post(Long internalId, String id, java.util.Date created_time, String message, String type, String picture, String link, Long postUserIdMapping, Long postLikeIdMapping) {
+    public Post(Long internalId, String id, java.util.Date created_time, String message, String type, String picture, String full_picture, String link, Long postUserIdMapping, Long postLikeIdMapping) {
         this.internalId = internalId;
         this.id = id;
         this.created_time = created_time;
         this.message = message;
         this.type = type;
         this.picture = picture;
+        this.full_picture = full_picture;
         this.link = link;
         this.postUserIdMapping = postUserIdMapping;
         this.postLikeIdMapping = postLikeIdMapping;
@@ -103,6 +105,14 @@ public class Post {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public String getFull_picture() {
+        return full_picture;
+    }
+
+    public void setFull_picture(String full_picture) {
+        this.full_picture = full_picture;
     }
 
     public String getLink() {

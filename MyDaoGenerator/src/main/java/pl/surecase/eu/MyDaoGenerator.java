@@ -8,7 +8,7 @@ import de.greenrobot.daogenerator.Schema;
 public class MyDaoGenerator {
 
     public static void main(String args[]) throws Exception {
-        Schema schema = new Schema(14, "com.yahoo.hakunamatata.dao");
+        Schema schema = new Schema(15, "com.yahoo.hakunamatata.dao");
         Entity post = schema.addEntity("Post");
         post.addLongProperty("internalId").primaryKey().autoincrement();
         post.addStringProperty("id");
@@ -16,6 +16,7 @@ public class MyDaoGenerator {
         post.addStringProperty("message");
         post.addStringProperty("type");
         post.addStringProperty("picture");
+        post.addStringProperty("full_picture");
         post.addStringProperty("link");
 
 
@@ -29,7 +30,6 @@ public class MyDaoGenerator {
         like.addLongProperty("internalId").primaryKey().autoincrement();
         like.addStringProperty("id");
         like.addIntProperty("total_count");
-
 
         Entity picture = schema.addEntity("Picture");
         picture.addLongProperty("internalId").primaryKey().autoincrement();

@@ -45,7 +45,7 @@ public class FacebookClient {
     public void getPosts(FacebookPaging facebookPaging, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl(String.format("%s/feed", groupId));
         RequestParams params = new RequestParams();
-        params.put("fields", "likes.summary(true),link,type,id,picture,message,from.fields(name, cover, picture)");
+        params.put("fields", "likes.summary(true),link,type,id,picture,full_picture,message,from.fields(name, cover, picture)");
         if (facebookPaging != null) {
             Log.e("next", facebookPaging.next);
             try {

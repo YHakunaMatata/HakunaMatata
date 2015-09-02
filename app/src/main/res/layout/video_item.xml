@@ -50,7 +50,7 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/profile_image"
             android:ellipsize="end"
-            android:maxEms="5"
+            android:maxEms="15"
             android:maxLines="1"
             android:text="chrisconnolly"
             android:textColor="#191919"
@@ -92,6 +92,8 @@
                     android:layout_height="fill_parent"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/demo" />

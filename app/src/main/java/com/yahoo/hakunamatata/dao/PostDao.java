@@ -32,9 +32,10 @@ public class PostDao extends AbstractDao<Post, Long> {
         public final static Property Message = new Property(3, String.class, "message", false, "MESSAGE");
         public final static Property Type = new Property(4, String.class, "type", false, "TYPE");
         public final static Property Picture = new Property(5, String.class, "picture", false, "PICTURE");
-        public final static Property Link = new Property(6, String.class, "link", false, "LINK");
-        public final static Property PostUserIdMapping = new Property(7, Long.class, "postUserIdMapping", false, "POST_USER_ID_MAPPING");
-        public final static Property PostLikeIdMapping = new Property(8, Long.class, "postLikeIdMapping", false, "POST_LIKE_ID_MAPPING");
+        public final static Property Full_picture = new Property(6, String.class, "full_picture", false, "FULL_PICTURE");
+        public final static Property Link = new Property(7, String.class, "link", false, "LINK");
+        public final static Property PostUserIdMapping = new Property(8, Long.class, "postUserIdMapping", false, "POST_USER_ID_MAPPING");
+        public final static Property PostLikeIdMapping = new Property(9, Long.class, "postLikeIdMapping", false, "POST_LIKE_ID_MAPPING");
     };
 
     private DaoSession daoSession;
@@ -59,9 +60,10 @@ public class PostDao extends AbstractDao<Post, Long> {
                 "'MESSAGE' TEXT," + // 3: message
                 "'TYPE' TEXT," + // 4: type
                 "'PICTURE' TEXT," + // 5: picture
-                "'LINK' TEXT," + // 6: link
-                "'POST_USER_ID_MAPPING' INTEGER," + // 7: postUserIdMapping
-                "'POST_LIKE_ID_MAPPING' INTEGER);"); // 8: postLikeIdMapping
+                "'FULL_PICTURE' TEXT," + // 6: full_picture
+                "'LINK' TEXT," + // 7: link
+                "'POST_USER_ID_MAPPING' INTEGER," + // 8: postUserIdMapping
+                "'POST_LIKE_ID_MAPPING' INTEGER);"); // 9: postLikeIdMapping
     }
 
     /** Drops the underlying database table. */
@@ -105,19 +107,24 @@ public class PostDao extends AbstractDao<Post, Long> {
             stmt.bindString(6, picture);
         }
  
+        String full_picture = entity.getFull_picture();
+        if (full_picture != null) {
+            stmt.bindString(7, full_picture);
+        }
+ 
         String link = entity.getLink();
         if (link != null) {
-            stmt.bindString(7, link);
+            stmt.bindString(8, link);
         }
  
         Long postUserIdMapping = entity.getPostUserIdMapping();
         if (postUserIdMapping != null) {
-            stmt.bindLong(8, postUserIdMapping);
+            stmt.bindLong(9, postUserIdMapping);
         }
  
         Long postLikeIdMapping = entity.getPostLikeIdMapping();
         if (postLikeIdMapping != null) {
-            stmt.bindLong(9, postLikeIdMapping);
+            stmt.bindLong(10, postLikeIdMapping);
         }
     }
 
@@ -143,9 +150,10 @@ public class PostDao extends AbstractDao<Post, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // message
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // type
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // picture
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // link
-            cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7), // postUserIdMapping
-            cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8) // postLikeIdMapping
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // full_picture
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // link
+            cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8), // postUserIdMapping
+            cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9) // postLikeIdMapping
         );
         return entity;
     }
@@ -159,9 +167,10 @@ public class PostDao extends AbstractDao<Post, Long> {
         entity.setMessage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setType(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setPicture(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setLink(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setPostUserIdMapping(cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7));
-        entity.setPostLikeIdMapping(cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8));
+        entity.setFull_picture(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setLink(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setPostUserIdMapping(cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8));
+        entity.setPostLikeIdMapping(cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9));
      }
     
     /** @inheritdoc */
