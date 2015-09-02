@@ -2,42 +2,32 @@ package com.yahoo.hakunamatata.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.yahoo.hakunamatata.R;
-import com.yahoo.hakunamatata.activities.RestApplication;
-import com.yahoo.hakunamatata.adapters.JokeContentAdapter;
+import com.yahoo.hakunamatata.adapters.FavoriteContentAdapter;
 import com.yahoo.hakunamatata.interfaces.Progressable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
 import com.yahoo.hakunamatata.models.FacebookPaging;
-import com.yahoo.hakunamatata.models.Post;
-import com.yahoo.hakunamatata.network.FacebookClient;
-import com.yahoo.hakunamatata.network.MyJsonHttpResponseHandler;
 
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import io.github.codefalling.recyclerviewswipedismiss.SwipeDismissRecyclerViewTouchListener;
 
 /**
  * Created by jonaswu on 2015/9/2.
  */
-public class FavoriteFragment extends Fragment {
-    private JokeContentAdapter contentAdapter;
-    private Progressable progressable;
+public class FavoriteFragment extends BaseFragment {
+    private FavoriteContentAdapter favoriteContentAdapter;
     private FacebookPaging facebookPaging;
     private LinearLayoutManager llm;
+    private Progressable progressable;
 
     public static FavoriteFragment newInstance() {
         FavoriteFragment fragment = new FavoriteFragment();
@@ -65,6 +55,31 @@ public class FavoriteFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
+        SwipeDismissRecyclerViewTouchListener listener = new SwipeDismissRecyclerViewTouchListener.Builder(
+                recList,
+                new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+                    @Override
+                    public boolean canDismiss(int position) {
+                        return true;
+                    }
+
+                    @Override
+                    public void onDismiss(View view) {
+                        // Do what you want when dismiss
+                        Toast.makeText(getActivity(), "Hi", Toast.LENGTH_LONG).show();
+
+                    }
+                })
+                .setIsVertical(false)
+                .setItemTouchCallback(
+                        new SwipeDismissRecyclerViewTouchListener.OnItemTouchCallBack() {
+                            @Override
+                            public void onTouch(int index) {
+                                // Do what you want when item be touched
+                            }
+                        })
+                .create();
+        recList.setOnTouchListener(listener);
 
         recList.setOnScrollListener(new EndlessRecyclerOnScrollListener(llm) {
             @Override
@@ -75,62 +90,25 @@ public class FavoriteFragment extends Fragment {
             }
         });
 
-        contentAdapter = new JokeContentAdapter(getActivity());
-        recList.setAdapter(contentAdapter);
+        favoriteContentAdapter = new FavoriteContentAdapter(getActivity());
+        recList.setAdapter(favoriteContentAdapter);
         initData(true);
         return view;
     }
 
     private void initData(boolean isCleanAdapter) {
         if (isCleanAdapter) {
-            contentAdapter.clearAll();
+            favoriteContentAdapter.clearAll();
             facebookPaging = null;
         }
-        FacebookClient client = RestApplication.getRestClient();
-        progressable.setBusy();
-        client.getPosts(facebookPaging, new MyJsonHttpResponseHandler(getActivity()) {
-            @Override
-            public void successCallBack(int statusCode, Header[] headers, Object data) {
-                Log.e("data", data.toString());
-                JSONObject dataJSON = (JSONObject) data;
-                bindToAdapter(dataJSON);
-                progressable.setFinish();
-            }
-
-            @Override
-            public void errorCallBack() {
-
-            }
-        });
+        bindToAdapter();
     }
 
-    private void bindToAdapter(JSONObject data) {
-        List<Post> posts = new ArrayList<>();
-        try {
-            JSONArray dataArray = data.getJSONArray("data");
-            for (int i = 0; i < dataArray.length(); i++) {
-                JSONObject postJSON = dataArray.getJSONObject(i);
-                Post post = Post.fromJSON(postJSON.toString());
-                posts.add(post);
-            }
+    private void bindToAdapter() {
 
-            try {
-                if (dataArray.length() == Integer.valueOf(this.getResources().getString(R.string.limit_of_api_return))) {
-                    JSONObject pagingJSON = data.getJSONObject("paging");
-                    Gson gson = new GsonBuilder().create();
-                    facebookPaging = gson.fromJson(pagingJSON.toString(), FacebookPaging.class);
-                } else {
-                    facebookPaging = null;
-                }
-            } catch (Exception e) {
-                facebookPaging = null;
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        contentAdapter.addWithPostList(posts);
-        contentAdapter.notifyDataSetChanged();
+        List<com.yahoo.hakunamatata.dao.Post> posts = postDao.queryBuilder().list();
+        favoriteContentAdapter.addWithPostList(posts);
+        favoriteContentAdapter.notifyDataSetChanged();
     }
 
 
@@ -147,5 +125,10 @@ public class FavoriteFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         progressable = null;
+    }
+
+    @Override
+    public void reload() {
+        initData(true);
     }
 }

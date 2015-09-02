@@ -3,6 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     card_view:cardCornerRadius="4dp">
 
     <RelativeLayout
@@ -59,12 +60,12 @@
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/name"
-            android:layout_below="@+id/name"
-            android:layout_marginTop="5dp"
+            android:layout_alignLeft="@id/profile_image"
+            android:layout_below="@+id/profile_image"
+            android:layout_marginTop="10dp"
             android:autoLink="all"
             android:linksClickable="true"
-            android:text="comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!comment!!"
+            android:text=""
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -84,53 +85,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/message"
-            android:orientation="horizontal"
-            android:paddingBottom="15dp"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:weightSum="2">
+            android:layout_below="@+id/message">
 
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal">
-
-                <ImageView
-                    android:id="@+id/reply"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="3dp"
-                    android:src="@drawable/laughing6" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:gravity="center_vertical"
-                    android:src="@drawable/funny" />
-
-                <TextView
-                    android:id="@+id/like"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="center_vertical"
-                    android:text="12345"
-                    android:textColor="#697882"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-
+            <include layout="@layout/item_action_panel" />
         </LinearLayout>
 
     </RelativeLayout>

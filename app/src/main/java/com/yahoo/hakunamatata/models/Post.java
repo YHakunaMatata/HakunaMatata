@@ -14,6 +14,7 @@ public class Post {
     public String type;
     public String picture;
     public String link;
+    public String id;
 
     public static Post fromJSON(String data) {
         Gson gson = new GsonBuilder()

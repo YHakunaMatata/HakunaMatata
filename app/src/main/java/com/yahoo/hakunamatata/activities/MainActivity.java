@@ -11,12 +11,13 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.adapters.ListingPagerAdapter;
 import com.yahoo.hakunamatata.fragments.SubmitFragment;
+import com.yahoo.hakunamatata.pager.CustomViewPager;
 import com.yahoo.hakunamatata.storage.Storage;
 
 
 public class MainActivity extends BaseActivity implements SubmitFragment.PostSuccessDelegator {
     private ListingPagerAdapter adapter;
-    private ViewPager viewPager;
+    private CustomViewPager viewPager;
     private SmartTabLayout viewPagerTab;
 
     private ResideMenu resideMenu;
@@ -39,7 +40,7 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
                 getSupportFragmentManager(),
                 this
         );
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (CustomViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
 
         viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
@@ -71,7 +72,7 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
 
         // You can disable a direction by setting ->
-        // resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
     }
 
     @Override

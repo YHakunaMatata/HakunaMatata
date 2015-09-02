@@ -2,27 +2,22 @@ package com.yahoo.hakunamatata.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
-import com.yahoo.hakunamatata.dao.UserDao;
 import com.yahoo.hakunamatata.lib.RoundedTransformation;
-import com.yahoo.hakunamatata.models.Post;
 
 /**
- * Created by jonaswu on 2015/8/30.
+ * Created by jonaswu on 2015/9/2.
  */
-public class JokeContentAdapter extends BaseAdapter<Post> {
-
-
+public class FavoriteContentAdapter extends BaseAdapter<com.yahoo.hakunamatata.dao.Post> {
     private final int POST = 0, PHOTO = 1, VIDEO = 2, LINK = 3;
 
-    public JokeContentAdapter(Context context) {
+    public FavoriteContentAdapter(Context context) {
         super(context);
     }
 
@@ -37,31 +32,33 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.joke_item, parent, false);
-                viewHolder = new JokeHolder(itemView);
+                viewHolder = new BaseAdapter.JokeHolder(itemView);
                 break;
             case PHOTO:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.photo_item, parent, false);
-                viewHolder = new JokeHolder(itemView);
+                viewHolder = new BaseAdapter.JokeHolder(itemView);
                 break;
             case VIDEO:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.video_item, parent, false);
-                viewHolder = new JokeHolder(itemView);
+                viewHolder = new BaseAdapter.JokeHolder(itemView);
+                Log.e("orz", "what happenend?");
                 break;
             case LINK:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.photo_item, parent, false);
-                viewHolder = new JokeHolder(itemView);
+                viewHolder = new BaseAdapter.JokeHolder(itemView);
+                Log.e("orz", "what happenend?");
                 break;
             default:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.joke_item, parent, false);
-                viewHolder = new JokeHolder(itemView);
+                viewHolder = new BaseAdapter.JokeHolder(itemView);
                 break;
         }
         return viewHolder;
@@ -69,47 +66,15 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        final Post post = postList.get(position);
-        JokeHolder vh = (JokeHolder) viewHolder;
-        vh.archive.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "test", Toast.LENGTH_LONG).show();
-                com.yahoo.hakunamatata.dao.Post postToDB = new com.yahoo.hakunamatata.dao.Post();
-                postToDB.setId(post.id);
-                postToDB.setMessage(post.message);
-                postToDB.setType(post.type);
-                postToDB.setPicture(post.picture);
-                postToDB.setLink(post.link);
-
-                com.yahoo.hakunamatata.dao.Picture pictureToDB = new com.yahoo.hakunamatata.dao.Picture();
-                pictureToDB.setUrl(post.from.picture.url);
-                pictureDao.insert(pictureToDB);
-
-                com.yahoo.hakunamatata.dao.User user = new com.yahoo.hakunamatata.dao.User();
-                user.setName(post.from.name);
-                user.setPicture(pictureToDB);
-                user.setId(post.from.id);
-                userDao.insert(user);
-
-                com.yahoo.hakunamatata.dao.Like like = new com.yahoo.hakunamatata.dao.Like();
-                like.setTotal_count(post.likes.total_count);
-                likeDao.insert(like);
-
-                postToDB.setUser(user);
-                postToDB.setLike(like);
-                postDao.insert(postToDB);
-
-            }
-        });
         try {
+            final com.yahoo.hakunamatata.dao.Post post = postList.get(position);
             switch (viewHolder.getItemViewType()) {
                 case POST:
-                    JokeHolder vh1 = (JokeHolder) viewHolder;
-                    vh1.userName.setText(post.from.name);
-                    vh1.message.setText(post.message);
+                    BaseAdapter.JokeHolder vh1 = (BaseAdapter.JokeHolder) viewHolder;
+                    vh1.userName.setText(post.getUser().getName());
+                    vh1.message.setText(post.getMessage());
                     Picasso.with(context)
-                            .load(post.from.picture.url)
+                            .load(post.getUser().getPicture().getUrl())
                             .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
@@ -117,13 +82,13 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                             .noFade()
                             .fit()
                             .into(vh1.profileImage);
-                    vh1.like.setText(String.valueOf(post.likes.total_count));
+                    vh1.like.setText(String.valueOf(post.getLike().getTotal_count()));
                     break;
                 case PHOTO:
-                    JokeHolder vh2 = (JokeHolder) viewHolder;
-                    vh2.userName.setText(post.from.name);
+                    BaseAdapter.JokeHolder vh2 = (BaseAdapter.JokeHolder) viewHolder;
+                    vh2.userName.setText(post.getUser().getName());
                     Picasso.with(context)
-                            .load(post.from.picture.url)
+                            .load(post.getUser().getPicture().getUrl())
                             .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
@@ -131,10 +96,10 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                             .noFade()
                             .fit()
                             .into(vh2.profileImage);
-                    vh2.like.setText(String.valueOf(post.likes.total_count));
-                    vh2.message.setText(post.message);
+                    vh2.like.setText(String.valueOf(post.getLike().getTotal_count()));
+                    vh2.message.setText(post.getMessage());
                     Picasso.with(context)
-                            .load(post.picture)
+                            .load(post.getPicture())
                             .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
@@ -144,11 +109,11 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                             .into(vh2.image);
                     break;
                 case LINK:
-                    JokeHolder vh3 = (JokeHolder) viewHolder;
-                    vh3.userName.setText(post.from.name);
-                    vh3.message.setText(post.message);
+                    BaseAdapter.JokeHolder vh3 = (BaseAdapter.JokeHolder) viewHolder;
+                    vh3.userName.setText(post.getUser().getName());
+                    vh3.message.setText(post.getMessage());
                     Picasso.with(context)
-                            .load(post.from.picture.url)
+                            .load(post.getUser().getPicture().getUrl())
                             .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
@@ -156,9 +121,9 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                             .noFade()
                             .fit()
                             .into(vh3.profileImage);
-                    vh3.like.setText(String.valueOf(post.likes.total_count));
+                    vh3.like.setText(String.valueOf(post.getLike().getTotal_count()));
                     Picasso.with(context)
-                            .load(post.picture)
+                            .load(post.getPicture())
                             .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
@@ -168,10 +133,10 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                             .into(vh3.image);
                     break;
                 case VIDEO:
-                    JokeHolder vh4 = (JokeHolder) viewHolder;
-                    vh4.userName.setText(post.from.name);
+                    BaseAdapter.JokeHolder vh4 = (BaseAdapter.JokeHolder) viewHolder;
+                    vh4.userName.setText(post.getUser().getName());
                     Picasso.with(context)
-                            .load(post.from.picture.url)
+                            .load(post.getUser().getPicture().getUrl())
                             .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
@@ -179,9 +144,9 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                             .noFade()
                             .fit()
                             .into(vh4.profileImage);
-                    vh4.like.setText(String.valueOf(post.likes.total_count));
+                    vh4.like.setText(String.valueOf(post.getLike().getTotal_count()));
                     Picasso.with(context)
-                            .load(post.picture)
+                            .load(post.getPicture())
                             .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
@@ -189,10 +154,10 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                             .noFade()
                             .fit()
                             .into(vh4.image);
-                    vh4.image.setOnClickListener(new OnClickListener() {
+                    vh4.image.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showVideoDialog(post.link);
+                            showVideoDialog(post.getLink());
                         }
                     });
                     break;
@@ -202,24 +167,27 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        BaseAdapter.JokeHolder vh = (BaseAdapter.JokeHolder) viewHolder;
+        vh.item_action_panel.setVisibility(View.GONE);
     }
 
     @Override
     public int getItemViewType(int position) {
         int returnType;
-        Post post = postList.get(position);
-        if (post.type.equals("photo")) {
+        com.yahoo.hakunamatata.dao.Post post = postList.get(position);
+        String type = post.getType();
+        if (type.equals("photo")) {
             returnType = PHOTO;
-        } else if (post.type.equals("status")) {
+        } else if (type.equals("status")) {
             returnType = POST;
-        } else if (post.type.equals("video")) {
+        } else if (type.equals("video")) {
             returnType = VIDEO;
-        } else if (post.type.equals("link")) {
+        } else if (type.equals("link")) {
             returnType = LINK;
         } else {
             returnType = -1;
         }
         return returnType;
     }
-
 }
