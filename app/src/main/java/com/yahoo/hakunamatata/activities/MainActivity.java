@@ -2,11 +2,14 @@ package com.yahoo.hakunamatata.activities;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.dk.view.folder.ResideMenu;
 import com.dk.view.folder.ResideMenuItem;
@@ -25,8 +28,9 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
     private ViewPager viewPager;
     private SmartTabLayout viewPagerTab;
 
+    private Context mContext;
     private ResideMenu resideMenu;
-    private ResideMenuItem itemHome;
+    private ResideMenuItem menuItemGuide;
     private ResideMenuItem itemProfile;
     private ResideMenuItem itemCalendar;
     private ResideMenuItem itemSettings;
@@ -35,6 +39,7 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContext = this;
         setUpPager();
         setUpMenu();
     }
@@ -64,20 +69,30 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         resideMenu.setScaleValue(0.6f);
 
         // create menu items;
-        itemHome = new ResideMenuItem(this, R.drawable.icon_home, "Home");
+        menuItemGuide = new ResideMenuItem(this, R.drawable.icon_home, "Guide");
         itemProfile = new ResideMenuItem(this, R.drawable.icon_profile, "Gallery");
         itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
 
 
-        resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(menuItemGuide, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_RIGHT);
         resideMenu.addMenuItem(itemCalendar, ResideMenu.DIRECTION_RIGHT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
 
         // You can disable a direction by setting ->
-        // resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+
+        menuItemGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, GuideActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

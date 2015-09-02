@@ -2,6 +2,7 @@ package com.yahoo.hakunamatata.activities;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -23,11 +24,16 @@ import github.chenupt.springindicator.viewpager.ScrollerViewPager;
 public class GuideActivity extends AppCompatActivity {
     ScrollerViewPager viewPager;
     Button btnSkip;
+    private SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
+
+        settings = getSharedPreferences("HakunaMatata", 0);
+        settings.edit().putBoolean("isFirstLaunch", false).commit();
+
         viewPager = (ScrollerViewPager) findViewById(R.id.view_pager);
         SpringIndicator springIndicator = (SpringIndicator) findViewById(R.id.indicator);
 
