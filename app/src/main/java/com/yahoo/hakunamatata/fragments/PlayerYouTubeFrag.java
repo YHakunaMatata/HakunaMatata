@@ -30,7 +30,6 @@ public class PlayerYouTubeFrag extends YouTubePlayerSupportFragment {
     }
 
     public void init() {
-
         initialize("AIzaSyBlDFaohXcFA-ZSJFrk63Y-eFnDi5JZB0I", new YouTubePlayer.OnInitializedListener() {
 
 
