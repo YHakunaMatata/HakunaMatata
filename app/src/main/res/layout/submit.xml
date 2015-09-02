@@ -54,20 +54,45 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:hint="@string/what_are_you_feeling"
-        android:lines="10"
+        android:lines="9"
         android:gravity="top|left"
         android:inputType="textMultiLine"
+        android:layout_marginBottom="10dp"
         android:scrollHorizontally="false"
         android:layout_weight="15" />
-
-
-    <TextView
-        android:id="@+id/length"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:inputType="textMultiLine"
-        android:scrollHorizontally="false"
-        android:layout_weight="1"
-        android:text="0/140" />
+        android:id="@+id/ivPreview"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:adjustViewBounds="true"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_capture"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/ivCaptureBtn"
+            />
+
+
+        <TextView
+            android:id="@+id/length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:inputType="textMultiLine"
+            android:scrollHorizontally="false"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:text="0/140"
+        />
+
+    </RelativeLayout>
+
 </LinearLayout>

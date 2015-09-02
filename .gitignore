@@ -70,3 +70,4 @@ local.properties
 .buildpath
 
 # facebooksdk
+facebooksdk/facebook/build/
