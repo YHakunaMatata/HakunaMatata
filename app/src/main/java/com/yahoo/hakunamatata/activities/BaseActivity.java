@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.yahoo.hakunamatata.R;
@@ -26,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
 
 
     private ElasticDownloadView mElasticDownloadView;
-    private RelativeLayout rl;
+    private FrameLayout rl;
     private boolean isBusy = false;
 
     @Override
@@ -57,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
         setSupportActionBar(toolbar);
         // toolbar.inflateMenu(R.menu.menu_main);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        rl = (RelativeLayout) findViewById(R.id.elastic_download_view_container);
+        rl = (FrameLayout) findViewById(R.id.elastic_download_view_container);
         mElasticDownloadView = (ElasticDownloadView) findViewById(R.id.elastic_download_view);
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
