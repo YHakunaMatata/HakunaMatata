@@ -2,6 +2,7 @@ package com.dk.view.folder;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,11 @@ public class ResideMenuItem extends LinearLayout{
     private ImageView iv_icon;
     /** menu item  title */
     private TextView tv_title;
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        super.setOnClickListener(l);
+    }
 
     public ResideMenuItem(Context context) {
         super(context);
