@@ -1,12 +1,12 @@
 package com.yahoo.hakunamatata.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +16,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,12 +65,14 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
     }
 
     private Long replyTo;
-    private TextView screenname;
     private TextView name;
     private EditText body;
     private TextView length;
     private ImageView image;
     private ImageView ivCaptureBtn;
+    private ImageView ivPreview;
+    private Button confirmButton;
+    private Button closeButton;
     private PostSuccessDelegator postSuccessDelegator;
     private Progressable progressable;
     private Reloadable reloadableActivity;
@@ -122,9 +128,10 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
                 Bitmap bMapScaled = Bitmap.createScaledBitmap(takenImage, 900, 600, true);
 
                 // Load the taken image into a preview
-                ImageView ivPreview = (ImageView) view.findViewById(R.id.ivPreview);
                 ivPreview.setImageBitmap(bMapScaled);
+                ivPreview.setVisibility(View.VISIBLE);
                 photoForUpload = convertBitmap2BiteAry(bMapScaled);
+
             } else { // Result was a failure
                 Log.d("my", "capture fail");
             }
@@ -144,18 +151,30 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final Dialog dialog = new Dialog(getActivity());
 
+       dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+       dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+       dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+       dialog.setContentView(R.layout.fragment_submit);
+       dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        return dialog;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         User user = RestApplication.getMe();
-        // getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        view = inflater.inflate(R.layout.submit, null);
+        View view =  inflater.inflate(R.layout.fragment_submit, container, false);
 
-
-        screenname = (TextView) view.findViewById(R.id.screenname);
         name = (TextView) view.findViewById(R.id.name);
         length = (TextView) view.findViewById(R.id.length);
         body = (EditText) view.findViewById(R.id.body);
         image = (ImageView) view.findViewById(R.id.profile_image);
+        confirmButton = (Button) view.findViewById(R.id.confirmBtn);
+        ivPreview = (ImageView) view.findViewById(R.id.ivPreview);
+        closeButton = (Button) view.findViewById(R.id.close_button);
 
         // set camera button
         ivCaptureBtn = (ImageView) view.findViewById(R.id.ivCaptureBtn);
@@ -166,7 +185,6 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
             }
         });
 
-        screenname.setText("");
         name.setText(user.name);
         body.setOnKeyListener(this);
         Picasso.with(getActivity())
@@ -178,56 +196,59 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
                 .fit()
                 .into(image);
 
-        AlertDialog.Builder b = new AlertDialog.Builder(getActivity())
-                .setTitle("")
-                .setPositiveButton("Fire!",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                FacebookClient client = RestApplication.getRestClient();
-                                // progressable.setBusy();
-                                if (photoForUpload != null) {
-                                    client.postPhoto(
-                                            body.getText().toString(),
-                                            photoForUpload,
-                                            new GraphRequest.Callback() {
-                                                @Override
-                                                public void onCompleted(GraphResponse graphResponse) {
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FacebookClient client = RestApplication.getRestClient();
+                // progressable.setBusy();
+                if (photoForUpload != null) {
+                    client.postPhoto(
+                            body.getText().toString(),
+                            photoForUpload,
+                            new GraphRequest.Callback() {
+                                @Override
+                                public void onCompleted(GraphResponse graphResponse) {
 
-                                                    //check graphResponse for success or failure
-                                                    if (graphResponse.getError() == null) {
-                                                        Log.d("my", "Success: " + graphResponse.toString());
-                                                        reload();
-                                                        // postSuccessDelegator.postSuccess();
-                                                        // progressable.setFinish();
-                                                    } else {
-                                                        Log.d("my", "Post photo fail: " + graphResponse.toString());
-                                                    }
-                                                }
-                                            }
-                                    );
-                                } else {
-                                    client.post(body.getText().toString(),
-                                            new MyJsonHttpResponseHandler(getActivity()) {
-                                                @Override
-                                                public void successCallBack(int statusCode, Header[] headers, Object data) {
-                                                    Log.d("my", data.toString());
-                                                    reload();
-                                                    // postSuccessDelegator.postSuccess();
-                                                    // progressable.setFinish();
-                                                }
-
-                                                @Override
-                                                public void errorCallBack() {
-                                                }
-                                            }
-                                    );
+                                    //check graphResponse for success or failure
+                                    if (graphResponse.getError() == null) {
+                                        Log.d("my", "Success: " + graphResponse.toString());
+                                        reload();
+                                        // postSuccessDelegator.postSuccess();
+                                        // progressable.setFinish();
+                                    } else {
+                                        Log.d("my", "Post photo fail: " + graphResponse.toString());
+                                    }
                                 }
                             }
-                        }
-                )
-                .setView(view);
+                    );
+                } else {
+                    client.post(body.getText().toString(),
+                            new MyJsonHttpResponseHandler(getActivity()) {
+                                @Override
+                                public void successCallBack(int statusCode, Header[] headers, Object data) {
+                                    Log.d("my", data.toString());
+                                    reload();
+                                    // postSuccessDelegator.postSuccess();
+                                    // progressable.setFinish();
+                                }
 
-        return b.create();
+                                @Override
+                                public void errorCallBack() {
+                                }
+                            }
+                    );
+                }
+            }
+        });
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        return view;
     }
 
     @Override

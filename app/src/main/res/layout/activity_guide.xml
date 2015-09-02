@@ -1,16 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+    >
 
         <github.chenupt.springindicator.viewpager.ScrollerViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center" />
 
         <github.chenupt.springindicator.SpringIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -22,6 +25,7 @@
             android:id="@+id/indicator"
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp" />
 
