@@ -1,8 +1,12 @@
 package com.yahoo.hakunamatata.network;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.HttpMethod;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -84,6 +88,27 @@ public class FacebookClient {
         String apiUrl = getApiUrl(String.format("%s/feed", groupId));
         RequestParams params = new RequestParams();
         params.put("message", message);
+        getClient().post(apiUrl, decorateParams(params, "post"), handler);
+    }
+    public void postPhoto(String message, byte[] byteImage, GraphRequest.Callback cb) {
+        String path = String.format("%s/photos", groupId);
+        AccessToken at = AccessToken.getCurrentAccessToken();
+        Bundle parameters = new Bundle();
+        parameters.putString("message", message);
+        parameters.putByteArray("picture", byteImage);
+        HttpMethod method = HttpMethod.POST;
+        GraphRequest request = new GraphRequest(at, path, parameters, method, cb);
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    // RestClient.java
+    public void postPhoto(byte[] byteImg, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl(String.format("%s/photos", groupId));
+        RequestParams params = new RequestParams();
+        params.put("method", "photos.upload");
+        params.put("message", "upload photo!");
+        params.put("picture", byteImg);
         getClient().post(apiUrl, decorateParams(params, "post"), handler);
     }
 

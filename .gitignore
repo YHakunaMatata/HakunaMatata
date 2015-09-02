@@ -69,4 +69,5 @@ local.properties
 # PDT-specific
 .buildpath
 
-facebooksdk/facebook/build/*
+# facebooksdk
+facebooksdk/facebook/build/
