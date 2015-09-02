@@ -100,7 +100,6 @@ public class FavoriteContentAdapter extends BaseAdapter<com.yahoo.hakunamatata.d
                     vh2.message.setText(post.getMessage());
                     Picasso.with(context)
                             .load(post.getPicture())
-                            .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
                             .centerInside()
@@ -124,7 +123,6 @@ public class FavoriteContentAdapter extends BaseAdapter<com.yahoo.hakunamatata.d
                     vh3.like.setText(String.valueOf(post.getLike().getTotal_count()));
                     Picasso.with(context)
                             .load(post.getPicture())
-                            .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
                             .centerInside()
@@ -147,7 +145,6 @@ public class FavoriteContentAdapter extends BaseAdapter<com.yahoo.hakunamatata.d
                     vh4.like.setText(String.valueOf(post.getLike().getTotal_count()));
                     Picasso.with(context)
                             .load(post.getPicture())
-                            .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
                             .centerInside()

@@ -2,19 +2,5 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
-    <item
-        android:id="@+id/miPost"
-        android:icon="@drawable/ic_post"
-        android:onClick="onClickPost"
-        android:orderInCategory="5"
-        android:title="NEW POST"
-        app:showAsAction="collapseActionView"></item>
 
-    <item
-        android:id="@+id/logout"
-        android:icon="@drawable/logout"
-        android:onClick="logout"
-        android:orderInCategory="5"
-        android:title="logout"
-        app:showAsAction="collapseActionView"></item>
 </menu>

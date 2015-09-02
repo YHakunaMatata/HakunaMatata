@@ -1,9 +1,11 @@
 package com.yahoo.hakunamatata.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.dk.view.folder.ResideMenu;
 import com.dk.view.folder.ResideMenuItem;
@@ -11,29 +13,36 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.adapters.ListingPagerAdapter;
 import com.yahoo.hakunamatata.fragments.SubmitFragment;
+import com.yahoo.hakunamatata.interfaces.Reloadable;
 import com.yahoo.hakunamatata.pager.CustomViewPager;
 import com.yahoo.hakunamatata.storage.Storage;
-
 
 public class MainActivity extends BaseActivity implements SubmitFragment.PostSuccessDelegator {
     private ListingPagerAdapter adapter;
     private CustomViewPager viewPager;
     private SmartTabLayout viewPagerTab;
 
+    private Context mContext;
     private ResideMenu resideMenu;
-    private ResideMenuItem itemHome;
-    private ResideMenuItem itemProfile;
-    private ResideMenuItem itemCalendar;
-    private ResideMenuItem itemSettings;
+    private ResideMenuItem menuItemGuide;
+    private ResideMenuItem menuItemAbout;
+    private ResideMenuItem menuItemSetting;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // SharedPreference->HakunaMatata->isFirstLaunch
+        // User will be direct to guide activity only when the first time launch the app.
+        if (getSharedPreferences("HakunaMatata", 0).getBoolean("isFirstLaunch", true)) {
+            navigateToGuideActivity();
+        }
+
+        mContext = this;
         setUpPager();
         setUpMenu();
     }
-
 
     private void setUpPager() {
         adapter = new ListingPagerAdapter(
@@ -46,6 +55,7 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
         viewPagerTab.setCustomTabView(adapter);
         viewPagerTab.setViewPager(viewPager);
+        viewPager.addOnPageChangeListener(adapter);
     }
 
     private void setUpMenu() {
@@ -60,19 +70,30 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         resideMenu.setScaleValue(0.6f);
 
         // create menu items;
-        itemHome = new ResideMenuItem(this, R.drawable.icon_home, "Home");
-        itemProfile = new ResideMenuItem(this, R.drawable.icon_profile, "Gallery");
-        itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
-        itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
+        menuItemGuide = new ResideMenuItem(this, R.drawable.ic_guide, "Guide");
+        menuItemAbout = new ResideMenuItem(this, R.drawable.ic_about, "About us");
+        menuItemSetting = new ResideMenuItem(this, R.drawable.ic_setting, "Setting");
 
 
-        resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemCalendar, ResideMenu.DIRECTION_RIGHT);
-        resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(menuItemGuide, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(menuItemAbout, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(menuItemSetting, ResideMenu.DIRECTION_RIGHT);
 
         // You can disable a direction by setting ->
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+
+        menuItemGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToGuideActivity();
+            }
+        });
+    }
+
+    private void navigateToGuideActivity() {
+        Intent i = new Intent(this, GuideActivity.class);
+        startActivity(i);
+        finish();
     }
 
     @Override
@@ -95,4 +116,9 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
 
     }
 
+    @Override
+    public void reload() {
+        int currentPage = viewPager.getCurrentItem();
+        ((Reloadable) adapter.getFragment(currentPage)).reload();
+    }
 }

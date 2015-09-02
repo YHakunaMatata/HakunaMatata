@@ -111,4 +111,9 @@ public class ListingPagerAdapter extends FragmentPagerAdapter implements SmartTa
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    public Fragment getFragment(int position) {
+        return mFragmentTags.get(position);
+    }
+
 }

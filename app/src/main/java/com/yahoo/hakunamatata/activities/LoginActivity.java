@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookFragment
 
     private FacebookFragment facebookFragment;
 
+
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +71,6 @@ public class LoginActivity extends AppCompatActivity implements FacebookFragment
         getMe();
     }
 
-    public void navigateToGuideActivity() {
-        Intent i = new Intent(this, GuideActivity.class);
-        startActivity(i);
-        finish();
-    }
-
     public void navigateToMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
@@ -95,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookFragment
                 JSONObject dataJSON = (JSONObject) data;
                 User user = User.fromJSON(dataJSON.toString());
                 RestApplication.setMe(user);
-                navigateToGuideActivity();
+                navigateToMainActivity();
             }
 
             @Override

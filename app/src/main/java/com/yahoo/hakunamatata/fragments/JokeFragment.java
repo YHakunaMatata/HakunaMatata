@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,6 +17,7 @@ import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.RestApplication;
 import com.yahoo.hakunamatata.adapters.JokeContentAdapter;
 import com.yahoo.hakunamatata.interfaces.Progressable;
+import com.yahoo.hakunamatata.interfaces.Reloadable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
 import com.yahoo.hakunamatata.models.FacebookPaging;
 import com.yahoo.hakunamatata.models.Post;
@@ -32,9 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.codefalling.recyclerviewswipedismiss.SwipeDismissRecyclerViewTouchListener;
-
-public class JokeFragment extends Fragment {
+public class JokeFragment extends BaseFragment implements Reloadable {
 
     private JokeContentAdapter contentAdapter;
     private Progressable progressable;
@@ -162,5 +160,10 @@ public class JokeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         progressable = null;
+    }
+
+    @Override
+    public void reload() {
+        initData(true);
     }
 }

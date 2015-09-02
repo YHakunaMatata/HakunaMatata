@@ -14,6 +14,7 @@ import com.melnykov.fab.FloatingActionButton;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.fragments.SubmitFragment;
 import com.yahoo.hakunamatata.interfaces.Progressable;
+import com.yahoo.hakunamatata.interfaces.Reloadable;
 
 import is.arontibo.library.ElasticDownloadView;
 import is.arontibo.library.ProgressDownloadView;
@@ -21,7 +22,7 @@ import is.arontibo.library.ProgressDownloadView;
 /**
  * Created by jonaswu on 2015/8/30.
  */
-public abstract class BaseActivity extends AppCompatActivity implements Progressable, SubmitFragment.PostSuccessDelegator {
+public abstract class BaseActivity extends AppCompatActivity implements Progressable, Reloadable, SubmitFragment.PostSuccessDelegator {
 
 
     private ElasticDownloadView mElasticDownloadView;

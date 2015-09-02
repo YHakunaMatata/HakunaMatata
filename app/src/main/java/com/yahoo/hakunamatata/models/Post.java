@@ -10,11 +10,11 @@ import com.google.gson.JsonElement;
 public class Post {
     public Like likes;
     public User from;
+    public String id;
     public String message;
     public String type;
     public String picture;
     public String link;
-    public String id;
 
     public static Post fromJSON(String data) {
         Gson gson = new GsonBuilder()

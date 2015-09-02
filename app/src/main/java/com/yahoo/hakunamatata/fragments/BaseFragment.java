@@ -20,6 +20,7 @@ public abstract class BaseFragment extends Fragment implements Reloadable {
     protected LikeDao likeDao;
     protected UserDao userDao;
     protected PictureDao pictureDao;
+    protected DaoSession daoSession;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public abstract class BaseFragment extends Fragment implements Reloadable {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(), "greendao", null);
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
-        DaoSession daoSession = daoMaster.newSession();
+        daoSession = daoMaster.newSession();
         postDao = daoSession.getPostDao();
         likeDao = daoSession.getLikeDao();
         userDao = daoSession.getUserDao();

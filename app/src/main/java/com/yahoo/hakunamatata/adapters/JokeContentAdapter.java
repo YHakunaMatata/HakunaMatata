@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
-import com.yahoo.hakunamatata.dao.UserDao;
+import com.yahoo.hakunamatata.activities.BaseActivity;
+import com.yahoo.hakunamatata.fragments.ReplyFragment;
 import com.yahoo.hakunamatata.lib.RoundedTransformation;
 import com.yahoo.hakunamatata.models.Post;
 
@@ -74,7 +76,6 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
         vh.archive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "test", Toast.LENGTH_LONG).show();
                 com.yahoo.hakunamatata.dao.Post postToDB = new com.yahoo.hakunamatata.dao.Post();
                 postToDB.setId(post.id);
                 postToDB.setMessage(post.message);
@@ -135,7 +136,6 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                     vh2.message.setText(post.message);
                     Picasso.with(context)
                             .load(post.picture)
-                            .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
                             .centerInside()
@@ -159,7 +159,6 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                     vh3.like.setText(String.valueOf(post.likes.total_count));
                     Picasso.with(context)
                             .load(post.picture)
-                            .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
                             .centerInside()
@@ -182,7 +181,6 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                     vh4.like.setText(String.valueOf(post.likes.total_count));
                     Picasso.with(context)
                             .load(post.picture)
-                            .transform(new RoundedTransformation(15, 1))
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
                             .centerInside()
@@ -199,6 +197,19 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                 default:
                     break;
             }
+
+            // bind replay button
+            ImageView replyBtn = ((JokeHolder) viewHolder).replyBtn;
+            if (replyBtn != null) {
+                replyBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showReplyDialog(post);
+                    }
+                });
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -220,6 +231,12 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
             returnType = -1;
         }
         return returnType;
+    }
+
+
+    private void showReplyDialog(Post post) {
+        ReplyFragment replyFragment = ReplyFragment.newInstance(post);
+        replyFragment.show(((BaseActivity) context).getSupportFragmentManager(), "reply dialog");
     }
 
 }

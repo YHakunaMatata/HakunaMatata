@@ -102,13 +102,10 @@ public class FacebookClient {
         request.executeAsync();
     }
 
-    // RestClient.java
-    public void postPhoto(byte[] byteImg, AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl(String.format("%s/photos", groupId));
+    public void postComment(String postId, String message, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl(String.format("%s/comments", postId));
         RequestParams params = new RequestParams();
-        params.put("method", "photos.upload");
-        params.put("message", "upload photo!");
-        params.put("picture", byteImg);
+        params.put("message", message);
         getClient().post(apiUrl, decorateParams(params, "post"), handler);
     }
 

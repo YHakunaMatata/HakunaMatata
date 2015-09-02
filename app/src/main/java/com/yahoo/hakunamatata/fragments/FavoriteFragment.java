@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.adapters.FavoriteContentAdapter;
+import com.yahoo.hakunamatata.dao.Post;
+import com.yahoo.hakunamatata.dao.PostDao;
 import com.yahoo.hakunamatata.interfaces.Progressable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
 import com.yahoo.hakunamatata.models.FacebookPaging;
@@ -49,7 +51,7 @@ public class FavoriteFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
 
-        RecyclerView recList = (RecyclerView) view.findViewById(R.id.cardList);
+        final RecyclerView recList = (RecyclerView) view.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -66,8 +68,12 @@ public class FavoriteFragment extends BaseFragment {
                     @Override
                     public void onDismiss(View view) {
                         // Do what you want when dismiss
-                        Toast.makeText(getActivity(), "Hi", Toast.LENGTH_LONG).show();
-
+                        int position = recList.getChildPosition(view);
+                        Post post = favoriteContentAdapter.getItemWithRemove(position);
+                        postDao.queryBuilder().where(PostDao.Properties.Id.eq(post.getId())
+                        ).buildDelete().executeDeleteWithoutDetachingEntities();
+                        daoSession.clear();
+                        favoriteContentAdapter.notifyDataSetChanged();
                     }
                 })
                 .setIsVertical(false)

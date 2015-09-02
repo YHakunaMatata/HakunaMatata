@@ -2,7 +2,6 @@ package com.yahoo.hakunamatata.adapters;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -69,6 +68,17 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         return postList.size();
     }
 
+    public T getItem(int position) {
+        return postList.get(position);
+    }
+
+    public T getItemWithRemove(int position) {
+        T post = postList.get(position);
+        postList.remove(position);
+        return post;
+    }
+
+
     public void addWithPostList(List<T> postList) {
         for (T post : postList) {
             this.postList.add(post);
@@ -89,6 +99,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         TextView message;
         ImageView profileImage;
         View view;
+        ImageView replyBtn;
 
         public JokeHolder(View view) {
             super(view);
@@ -100,6 +111,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
             image = (ImageView) view.findViewById(R.id.main_image);
             item_action_panel = (LinearLayout) view.findViewById(R.id.item_action_panel);
             archive = (ImageView) view.findViewById(R.id.archive);
+            replyBtn = (ImageView) view.findViewById(R.id.reply);
         }
     }
 

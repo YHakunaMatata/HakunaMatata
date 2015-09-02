@@ -1,12 +1,15 @@
 package com.yahoo.hakunamatata.activities;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.fragments.GuideFragment;
@@ -22,11 +25,16 @@ import github.chenupt.springindicator.viewpager.ScrollerViewPager;
 public class GuideActivity extends AppCompatActivity {
     ScrollerViewPager viewPager;
     Button btnSkip;
+    private SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
+
+        settings = getSharedPreferences("HakunaMatata", 0);
+        settings.edit().putBoolean("isFirstLaunch", false).commit();
+
         viewPager = (ScrollerViewPager) findViewById(R.id.view_pager);
         SpringIndicator springIndicator = (SpringIndicator) findViewById(R.id.indicator);
 
@@ -37,8 +45,24 @@ public class GuideActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.fixScrollSpeed();
 
+        TextView skipButton = (TextView) findViewById(R.id.skipBtn);
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSkipGuide(view);
+            }
+        });
+
         // just set viewPager
         springIndicator.setViewPager(viewPager);
+
+        // play laugh sound
+        startMyAudioFile();
+    }
+
+    private void startMyAudioFile() {
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.laugh);
+        mediaPlayer.start();
     }
 
     private List<String> getTitles(){
