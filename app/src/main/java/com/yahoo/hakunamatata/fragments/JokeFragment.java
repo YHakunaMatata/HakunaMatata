@@ -79,7 +79,7 @@ public class JokeFragment extends BaseFragment implements Reloadable {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        recList.addOnScrollListener(new EndlessRecyclerOnScrollListener(llm) {
+        recList.setOnScrollListener(new EndlessRecyclerOnScrollListener(llm) {
             @Override
             public void onLoadMore(int current_page) {
                 if (facebookPaging != null) {

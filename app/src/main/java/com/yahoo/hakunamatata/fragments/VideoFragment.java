@@ -1,21 +1,15 @@
 package com.yahoo.hakunamatata.fragments;
 
 import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.MediaController;
-import android.widget.TextView;
+import android.view.WindowManager;
 import android.widget.VideoView;
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.yahoo.hakunamatata.R;
 
 public class VideoFragment extends DialogFragment {
@@ -42,6 +36,12 @@ public class VideoFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setFormat(PixelFormat.TRANSLUCENT);
+
+        // fix dialog darkness
+        WindowManager.LayoutParams a = getDialog().getWindow().getAttributes();
+        a.dimAmount = 0;
+        getDialog().getWindow().setAttributes(a);
+
         View view = inflater.inflate(R.layout.youtube_fragment, container);
         PlayerYouTubeFrag youTubePlayerFragment = PlayerYouTubeFrag.newInstance(getArguments().getString("url"));
         getChildFragmentManager().beginTransaction().add(R.id.youtubeplayerfragment_container, youTubePlayerFragment).commit();
