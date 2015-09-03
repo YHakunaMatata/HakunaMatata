@@ -45,18 +45,6 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         setUpMenu();
     }
 
-    // App would crash if Home Button is pressed when the reside Menu is opened,
-    // Error: can't get Toolbar, Title blablabla...
-    // haven't find the root cause yet
-    @Override
-    protected void onStop() {
-        if(resideMenu != null && resideMenu.isOpened()) {
-            resideMenu.closeMenu();
-        }
-        super.onStop();
-    }
-
-
     private void setUpPager() {
         adapter = new ListingPagerAdapter(
                 getSupportFragmentManager(),

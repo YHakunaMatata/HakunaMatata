@@ -1,6 +1,6 @@
 # HakunaMatata
-
-"Hakuna matata" is a Swahili phrase; translated, it roughly means "No worries".  
+<img src='app/src/main/res/drawable/ic_hakulogo.png' width='100px' height='100px'>
+"Hakuna matata" is a Swahili phrase; translated, it roughly means "No Worries".
 
 In this project we're going to build an app which can make people laugh. It's a platform that collect jokes, funny images and funny videos. Also users can post and share their joke on it. We use facebook as the content storage.
 
