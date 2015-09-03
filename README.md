@@ -17,7 +17,7 @@ In this project we're going to build an app which can make people laugh. It's a 
 * [x] Add cool animation and style on the app
 
 ## Walkthrough
-<img src='walkthrough.gif' title='finaldemo.gif' width='550px'  height='600px'  alt=''/>
+<img src='walkthrough.gif' title='walkthrough.gif' width='550px'  height='600px'  alt=''/>
 
 ## Developer setup
 * For Mac OSX, copy `key/debug.keystore` to `~/.android/`
