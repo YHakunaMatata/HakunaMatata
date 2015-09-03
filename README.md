@@ -48,7 +48,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 - [SmartTabLayout](https://github.com/ogaclejapan/SmartTabLayout) - view pager tab
 - [FolderResiderMenu](https://github.com/dkmeteor/Folder-ResideMenu) - swipe from right edge to squeeze the screen and open the menu
 - [SpringIndicator](https://github.com/chenupt/SpringIndicator) - the view pager indicator of guide fragments
-- [SecretTextView](https://github.com/matthewrkula/SecretTextView) - A TextView of which the characters fade in/out at different speeds and startoffset.
+- [SecretTextView](https://github.com/matthewrkula/SecretTextView) - A TextView in which the characters fade in/out at different speeds.
 
 
 ## Developer setup
