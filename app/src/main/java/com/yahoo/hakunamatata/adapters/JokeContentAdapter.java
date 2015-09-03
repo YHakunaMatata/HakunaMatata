@@ -7,15 +7,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.BaseActivity;
+import com.yahoo.hakunamatata.dao.PostDao;
 import com.yahoo.hakunamatata.fragments.ReplyFragment;
 import com.yahoo.hakunamatata.lib.RoundedTransformation;
 import com.yahoo.hakunamatata.lib.util;
 import com.yahoo.hakunamatata.models.Post;
+
+import java.util.List;
 
 /**
  * Created by jonaswu on 2015/8/30.
@@ -28,7 +30,6 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
     public JokeContentAdapter(Context context) {
         super(context);
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -75,39 +76,55 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final Post post = postList.get(position);
-        JokeHolder vh = (JokeHolder) viewHolder;
-        vh.archive.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.yahoo.hakunamatata.dao.Post postToDB = new com.yahoo.hakunamatata.dao.Post();
-                postToDB.setId(post.id);
-                postToDB.setMessage(post.message);
-                postToDB.setType(post.type);
-                postToDB.setPicture(post.picture);
-                postToDB.setLink(post.link);
+        final JokeHolder vh = (JokeHolder) viewHolder;
 
-                com.yahoo.hakunamatata.dao.Picture pictureToDB = new com.yahoo.hakunamatata.dao.Picture();
-                pictureToDB.setUrl(post.from.picture.url);
-                pictureDao.insert(pictureToDB);
 
-                com.yahoo.hakunamatata.dao.User user = new com.yahoo.hakunamatata.dao.User();
-                user.setName(post.from.name);
-                user.setPicture(pictureToDB);
-                user.setId(post.from.id);
-                userDao.insert(user);
+        vh.time.setText(util.getBestTimeDiff(post.created_time));
+        List<com.yahoo.hakunamatata.dao.Post> list = postDao.queryBuilder().where(
+                PostDao.Properties.Id.eq(post.id)
+        ).build().list();
+        if (list.size() > 0) {
+            vh.archive.setImageResource(R.drawable.heart_bright);
+        } else {
+            vh.archive.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    com.yahoo.hakunamatata.dao.Post postToDB = new com.yahoo.hakunamatata.dao.Post();
+                    postToDB.setId(post.id);
+                    postToDB.setMessage(post.message);
+                    postToDB.setCreated_time(post.created_time);
+                    postToDB.setType(post.type);
+                    postToDB.setPicture(post.picture);
+                    postToDB.setLink(post.link);
 
-                com.yahoo.hakunamatata.dao.Like like = new com.yahoo.hakunamatata.dao.Like();
-                like.setTotal_count(post.likes.total_count);
-                likeDao.insert(like);
+                    com.yahoo.hakunamatata.dao.Picture pictureToDB = new com.yahoo.hakunamatata.dao.Picture();
+                    pictureToDB.setUrl(post.from.picture.url);
+                    pictureDao.insert(pictureToDB);
 
-                postToDB.setUser(user);
-                postToDB.setLike(like);
-                postDao.insert(postToDB);
+                    com.yahoo.hakunamatata.dao.User user = new com.yahoo.hakunamatata.dao.User();
+                    user.setName(post.from.name);
+                    user.setPicture(pictureToDB);
+                    user.setId(post.from.id);
+                    userDao.insert(user);
 
-                util.showToast(context, context.getResources().getString(R.string.add_to_favoraite_success));
+                    com.yahoo.hakunamatata.dao.Like like = new com.yahoo.hakunamatata.dao.Like();
+                    like.setTotal_count(post.likes.total_count);
+                    likeDao.insert(like);
 
-            }
-        });
+                    postToDB.setUser(user);
+                    postToDB.setLike(like);
+                    postDao.insert(postToDB);
+
+
+                    // good to update immediately
+                    vh.archive.setImageResource(R.drawable.heart_bright);
+                    vh.archive.setOnClickListener(null);
+
+                    util.showToast(context, context.getResources().getString(R.string.add_to_favoraite_success));
+
+                }
+            });
+        }
         try {
             switch (viewHolder.getItemViewType()) {
                 case POST:

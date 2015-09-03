@@ -45,13 +45,32 @@ public class FacebookClient {
     public void getPosts(FacebookPaging facebookPaging, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl(String.format("%s/feed", groupId));
         RequestParams params = new RequestParams();
-        params.put("fields", "likes.summary(true),link,type,id,picture,full_picture,message,from.fields(name, cover, picture)");
+        params.put("fields", "likes.summary(true),created_time,link,type,id,picture,full_picture,message,from.fields(name, cover, picture)");
         if (facebookPaging != null) {
             Log.e("next", facebookPaging.next);
             try {
                 Map<String, List<String>> query = util.splitQuery(new URL(facebookPaging.next));
                 params.put("__paging_token", query.get("__paging_token").get(0));
                 params.put("until", query.get("until").get(0));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        getClient().get(apiUrl, decorateParams(params, "get"), handler);
+    }
+
+
+    // RestClient.java
+    public void getCommentsOfObject(FacebookPaging facebookPaging, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl(String.format("%s/comments", groupId));
+        RequestParams params = new RequestParams();
+        // params.put("fields", "likes.summary(true),created_time,link,type,id,picture,full_picture,message,from.fields(name, cover, picture)");
+        if (facebookPaging != null) {
+            try {
+                Map<String, List<String>> query = util.splitQuery(new URL(facebookPaging.next));
+                params.put("after", facebookPaging.after);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (MalformedURLException e) {

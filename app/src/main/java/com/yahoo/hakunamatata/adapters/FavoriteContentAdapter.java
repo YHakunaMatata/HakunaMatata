@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.lib.RoundedTransformation;
+import com.yahoo.hakunamatata.lib.util;
 
 /**
  * Created by jonaswu on 2015/9/2.
@@ -68,6 +69,7 @@ public class FavoriteContentAdapter extends BaseAdapter<com.yahoo.hakunamatata.d
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         try {
             final com.yahoo.hakunamatata.dao.Post post = postList.get(position);
+            ((JokeHolder) viewHolder).time.setText(util.getBestTimeDiff(post.getCreated_time()));
             switch (viewHolder.getItemViewType()) {
                 case POST:
                     BaseAdapter.JokeHolder vh1 = (BaseAdapter.JokeHolder) viewHolder;
@@ -99,7 +101,7 @@ public class FavoriteContentAdapter extends BaseAdapter<com.yahoo.hakunamatata.d
                     vh2.like.setText(String.valueOf(post.getLike().getTotal_count()));
                     vh2.message.setText(post.getMessage());
                     Picasso.with(context)
-                            .load(post.getPicture())
+                            .load(post.getFull_picture())
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
                             .centerInside()
@@ -122,7 +124,7 @@ public class FavoriteContentAdapter extends BaseAdapter<com.yahoo.hakunamatata.d
                             .into(vh3.profileImage);
                     vh3.like.setText(String.valueOf(post.getLike().getTotal_count()));
                     Picasso.with(context)
-                            .load(post.getPicture())
+                            .load(post.getFull_picture())
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
                             .centerInside()
@@ -144,7 +146,7 @@ public class FavoriteContentAdapter extends BaseAdapter<com.yahoo.hakunamatata.d
                             .into(vh4.profileImage);
                     vh4.like.setText(String.valueOf(post.getLike().getTotal_count()));
                     Picasso.with(context)
-                            .load(post.getPicture())
+                            .load(post.getFull_picture())
                             .error(R.drawable.images)
                             .placeholder(R.drawable.placeholder)
                             .centerInside()

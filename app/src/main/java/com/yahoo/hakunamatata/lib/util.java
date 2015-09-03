@@ -83,8 +83,8 @@ public class util {
     }
 
     public static Date getDateFromString(String date) throws ParseException {
-        // String date example: "Mon Sep 03 13:24:14 +0000 2012"
-        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss Z yyyy", Locale.ENGLISH);
+        // String date example: "2015-09-02T11:41:30+0000"
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+SSSS", Locale.ENGLISH);
         Date result = df.parse(date);
         return result;
     }

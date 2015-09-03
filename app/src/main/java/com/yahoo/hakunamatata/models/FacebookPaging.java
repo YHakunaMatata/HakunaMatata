@@ -6,4 +6,6 @@ package com.yahoo.hakunamatata.models;
 public class FacebookPaging {
     public String previous;
     public String next;
+    public String after;
+    public String before;
 }

@@ -20,6 +20,8 @@ import com.yahoo.hakunamatata.dao.PostDao;
 import com.yahoo.hakunamatata.dao.UserDao;
 import com.yahoo.hakunamatata.fragments.VideoFragment;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +102,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         ImageView profileImage;
         View view;
         ImageView replyBtn;
+        TextView time;
 
         public JokeHolder(View view) {
             super(view);
@@ -112,6 +115,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
             item_action_panel = (LinearLayout) view.findViewById(R.id.item_action_panel);
             archive = (ImageView) view.findViewById(R.id.archive);
             replyBtn = (ImageView) view.findViewById(R.id.reply);
+            time = (TextView) view.findViewById(R.id.time);
         }
     }
 

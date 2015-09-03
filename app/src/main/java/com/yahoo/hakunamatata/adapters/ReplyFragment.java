@@ -1,8 +1,7 @@
-package com.yahoo.hakunamatata.fragments;
+package com.yahoo.hakunamatata.adapters;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.RestApplication;
-import com.yahoo.hakunamatata.adapters.JokeContentAdapter;
 import com.yahoo.hakunamatata.interfaces.Progressable;
-import com.yahoo.hakunamatata.interfaces.Reloadable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
 import com.yahoo.hakunamatata.models.FacebookPaging;
 import com.yahoo.hakunamatata.models.Post;
@@ -32,21 +29,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JokeFragment extends BaseFragment implements Reloadable {
-
+/**
+ * Created by jonaswu on 2015/9/3.
+ */
+public class ReplyFragment extends DialogFragment {
     private JokeContentAdapter contentAdapter;
     private Progressable progressable;
     private SwipeRefreshLayout swipeContainer;
     private FacebookPaging facebookPaging;
     private LinearLayoutManager llm;
 
-    public static JokeFragment newInstance() {
-        JokeFragment fragment = new JokeFragment();
+    public static ReplyFragment newInstance() {
+        ReplyFragment fragment = new ReplyFragment();
         Bundle args = new Bundle();
         return fragment;
     }
 
-    public JokeFragment() {
+    public ReplyFragment() {
     }
 
     @Override
@@ -67,7 +66,7 @@ public class JokeFragment extends BaseFragment implements Reloadable {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                JokeFragment.this.initData(true);
+                ReplyFragment.this.initData(true);
             }
         });
 
@@ -144,26 +143,5 @@ public class JokeFragment extends BaseFragment implements Reloadable {
         }
         contentAdapter.addWithPostList(posts);
         contentAdapter.notifyDataSetChanged();
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(getActivity() instanceof Progressable)) {
-            Log.e("error", "activity should implement Progressable interface");
-        }
-        progressable = (Progressable) getActivity();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        progressable = null;
-    }
-
-    @Override
-    public void reload() {
-        initData(true);
     }
 }
