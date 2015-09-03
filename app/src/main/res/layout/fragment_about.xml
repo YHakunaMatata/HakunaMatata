@@ -26,16 +26,63 @@
             android:textColor="@android:color/white"
             />
 
-        <com.yahoo.hakunamatata.lib.SecretTextView
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_us"
-            android:textSize="18sp"
-            android:textColor="@color/brown"
-            android:textStyle="bold"
-            android:id="@+id/stvAbout"/>
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+
+            >
+
+            <com.yahoo.hakunamatata.view.SecretTextView
+
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_us"
+                android:textSize="18sp"
+                android:textColor="@color/brown"
+                android:textStyle="bold"
+                android:id="@+id/stvAbout"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                />
+
+            <ImageView android:id="@+id/ivJonas"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/jonas_profile"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                />
+
+            <ImageView android:id="@+id/ivSinze"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/sinze_profile"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/ivJonas"
+                android:layout_marginTop="20dp"
+                />
+
+            <ImageView android:id="@+id/ivYutu"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/yutu_profile"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/ivSinze"
+                android:layout_marginTop="20dp"
+                />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp">
+        </LinearLayout>
+
 
     </LinearLayout>
 

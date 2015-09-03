@@ -36,6 +36,7 @@
         android:id="@+id/videoview"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_alignParentTop="true"
+
+        android:layout_centerInParent="true"
         android:visibility="gone" />
 </RelativeLayout>

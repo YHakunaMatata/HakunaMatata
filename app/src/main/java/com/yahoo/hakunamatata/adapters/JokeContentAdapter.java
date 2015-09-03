@@ -24,7 +24,6 @@ import java.util.List;
  */
 public class JokeContentAdapter extends BaseAdapter<Post> {
 
-
     private final int POST = 0, PHOTO = 1, VIDEO = 2, LINK = 3;
 
     public JokeContentAdapter(Context context) {
@@ -77,7 +76,6 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final Post post = postList.get(position);
         final JokeHolder vh = (JokeHolder) viewHolder;
-
 
         vh.time.setText(util.getBestTimeDiff(post.created_time));
         List<com.yahoo.hakunamatata.dao.Post> list = postDao.queryBuilder().where(

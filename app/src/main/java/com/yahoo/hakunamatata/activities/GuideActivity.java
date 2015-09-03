@@ -2,7 +2,6 @@ package com.yahoo.hakunamatata.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.fragments.GuideFragment;
+import com.yahoo.hakunamatata.lib.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,13 +57,10 @@ public class GuideActivity extends AppCompatActivity {
         springIndicator.setViewPager(viewPager);
 
         // play laugh sound
-        startMyAudioFile();
+        util.startMyAudioFile(this);
     }
 
-    private void startMyAudioFile() {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.laugh);
-        mediaPlayer.start();
-    }
+
 
     private List<String> getTitles(){
         ArrayList<String> al = new ArrayList<>();
