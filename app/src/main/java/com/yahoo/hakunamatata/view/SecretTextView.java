@@ -49,8 +49,10 @@ public class SecretTextView extends TextView {
 
     public void toggle(){
         if (mIsVisible) {
+            animator.setStartDelay(0);
             hide();
         } else {
+            animator.setStartDelay(1500);
             show();
         }
     }

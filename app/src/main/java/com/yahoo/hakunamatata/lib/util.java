@@ -27,8 +27,8 @@ import java.util.regex.Pattern;
  * Created by jonaswu on 2015/8/30.
  */
 public class util {
-    public static void startMyAudioFile(Context mContext) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(mContext, R.raw.laugh);
+    public static void startMyAudioFile(Context context) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.laugh);
         mediaPlayer.start();
     }
 
