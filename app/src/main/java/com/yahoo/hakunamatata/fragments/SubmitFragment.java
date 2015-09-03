@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -39,6 +41,7 @@ import org.apache.http.Header;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+
 /**
  * Created by jonaswu on 2015/8/30.
  */
@@ -100,7 +103,7 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), APP_TAG);
 
             // Create the storage directory if it does not exist
-            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
                 Log.d(APP_TAG, "failed to create directory");
             }
 
@@ -110,7 +113,7 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
         return null;
     }
 
-    private byte[] convertBitmap2BiteAry (Bitmap bmp) {
+    private byte[] convertBitmap2BiteAry(Bitmap bmp) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         return stream.toByteArray();
@@ -137,6 +140,7 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
             }
         }
     }
+
     private boolean isExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();
         if (state.equals(Environment.MEDIA_MOUNTED)) {
@@ -153,11 +157,11 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = new Dialog(getActivity());
 
-       dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-       dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-       dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-       dialog.setContentView(R.layout.fragment_submit);
-       dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+        dialog.setContentView(R.layout.fragment_submit);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         return dialog;
     }
@@ -166,7 +170,7 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         User user = RestApplication.getMe();
-        View view =  inflater.inflate(R.layout.fragment_submit, container, false);
+        View view = inflater.inflate(R.layout.fragment_submit, container, false);
 
         name = (TextView) view.findViewById(R.id.name);
         length = (TextView) view.findViewById(R.id.length);
@@ -178,7 +182,7 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
 
         // set camera button
         ivCaptureBtn = (ImageView) view.findViewById(R.id.ivCaptureBtn);
-        ivCaptureBtn.setOnClickListener(new View.OnClickListener(){
+        ivCaptureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onCapture(v);
@@ -187,6 +191,23 @@ public class SubmitFragment extends DialogFragment implements TextView.OnKeyList
 
         name.setText(user.name);
         body.setOnKeyListener(this);
+        body.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                length.setText(String.valueOf(cs.toString().length()) + "/" + getActivity().getResources().getString(R.string.maxlenghtofatweet));
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+
+        });
+
         Picasso.with(getActivity())
                 .load(user.picture.url)
                 .error(R.drawable.images)
