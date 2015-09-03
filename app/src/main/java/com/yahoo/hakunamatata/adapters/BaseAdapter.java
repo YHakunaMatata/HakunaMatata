@@ -104,6 +104,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         ImageView replyBtn;
         TextView time;
 
+
         public JokeHolder(View view) {
             super(view);
             this.view = view;

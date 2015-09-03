@@ -63,10 +63,10 @@ public class FacebookClient {
 
 
     // RestClient.java
-    public void getCommentsOfObject(FacebookPaging facebookPaging, AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl(String.format("%s/comments", groupId));
+    public void getCommentsOfObject(String id, FacebookPaging facebookPaging, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl(String.format("%s/comments", id));
         RequestParams params = new RequestParams();
-        // params.put("fields", "likes.summary(true),created_time,link,type,id,picture,full_picture,message,from.fields(name, cover, picture)");
+        params.put("fields", "message,id,from.fields(name, cover, picture)");
         if (facebookPaging != null) {
             try {
                 Map<String, List<String>> query = util.splitQuery(new URL(facebookPaging.next));
@@ -109,6 +109,7 @@ public class FacebookClient {
         params.put("message", message);
         getClient().post(apiUrl, decorateParams(params, "post"), handler);
     }
+
     public void postPhoto(String message, byte[] byteImage, GraphRequest.Callback cb) {
         String path = String.format("%s/photos", groupId);
         AccessToken at = AccessToken.getCurrentAccessToken();

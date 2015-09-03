@@ -1,5 +1,8 @@
-package com.yahoo.hakunamatata.adapters;
+package com.yahoo.hakunamatata.fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,15 +12,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.RestApplication;
+import com.yahoo.hakunamatata.adapters.CommentAdapter;
 import com.yahoo.hakunamatata.interfaces.Progressable;
 import com.yahoo.hakunamatata.lib.EndlessRecyclerOnScrollListener;
+import com.yahoo.hakunamatata.models.Comment;
 import com.yahoo.hakunamatata.models.FacebookPaging;
-import com.yahoo.hakunamatata.models.Post;
 import com.yahoo.hakunamatata.network.FacebookClient;
 import com.yahoo.hakunamatata.network.MyJsonHttpResponseHandler;
 
@@ -32,20 +38,23 @@ import java.util.List;
 /**
  * Created by jonaswu on 2015/9/3.
  */
-public class ReplyFragment extends DialogFragment {
-    private JokeContentAdapter contentAdapter;
+public class CommentFragment extends DialogFragment {
+    private CommentAdapter commentAdapter;
     private Progressable progressable;
     private SwipeRefreshLayout swipeContainer;
     private FacebookPaging facebookPaging;
     private LinearLayoutManager llm;
 
-    public static ReplyFragment newInstance() {
-        ReplyFragment fragment = new ReplyFragment();
+    public static CommentFragment newInstance(Progressable progressable, String id) {
+        CommentFragment fragment = new CommentFragment();
         Bundle args = new Bundle();
+        args.putString("id", id);
+        fragment.setArguments(args);
+        fragment.setProgressable(progressable);
         return fragment;
     }
 
-    public ReplyFragment() {
+    public CommentFragment() {
     }
 
     @Override
@@ -57,7 +66,7 @@ public class ReplyFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_joke, container, false);
+        View view = inflater.inflate(R.layout.reply_fragment, container, false);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         swipeContainer.setColorSchemeColors(0, 0, 0, 0);
@@ -66,18 +75,18 @@ public class ReplyFragment extends DialogFragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ReplyFragment.this.initData(true);
+                CommentFragment.this.initData(true);
             }
         });
 
 
-        RecyclerView recList = (RecyclerView) view.findViewById(R.id.cardList);
+        RecyclerView recList = (RecyclerView) view.findViewById(R.id.replylist);
         recList.setHasFixedSize(true);
         llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        recList.setOnScrollListener(new EndlessRecyclerOnScrollListener(llm) {
+        recList.addOnScrollListener(new EndlessRecyclerOnScrollListener(llm) {
             @Override
             public void onLoadMore(int current_page) {
                 if (facebookPaging != null) {
@@ -86,20 +95,30 @@ public class ReplyFragment extends DialogFragment {
             }
         });
 
-        contentAdapter = new JokeContentAdapter(getActivity());
-        recList.setAdapter(contentAdapter);
+        commentAdapter = new CommentAdapter(getActivity());
+        recList.setAdapter(commentAdapter);
         initData(true);
+
+        // Close
+
+        view.findViewById(R.id.close_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
         return view;
     }
 
     private void initData(boolean isCleanAdapter) {
         if (isCleanAdapter) {
-            contentAdapter.clearAll();
+            commentAdapter.clearAll();
             facebookPaging = null;
         }
         FacebookClient client = RestApplication.getRestClient();
         progressable.setBusy();
-        client.getPosts(facebookPaging, new MyJsonHttpResponseHandler(getActivity()) {
+        client.getCommentsOfObject(getArguments().getString("id"), facebookPaging, new MyJsonHttpResponseHandler(getActivity()) {
             @Override
             public void successCallBack(int statusCode, Header[] headers, Object data) {
                 Log.e("data", data.toString());
@@ -117,13 +136,13 @@ public class ReplyFragment extends DialogFragment {
     }
 
     private void bindToAdapter(JSONObject data) {
-        List<Post> posts = new ArrayList<>();
+        List<Comment> commentList = new ArrayList<>();
         try {
             JSONArray dataArray = data.getJSONArray("data");
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject postJSON = dataArray.getJSONObject(i);
-                Post post = Post.fromJSON(postJSON.toString());
-                posts.add(post);
+                Comment comment = Comment.fromJSON(postJSON.toString());
+                commentList.add(comment);
             }
 
             try {
@@ -141,7 +160,23 @@ public class ReplyFragment extends DialogFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        contentAdapter.addWithPostList(posts);
-        contentAdapter.notifyDataSetChanged();
+        commentAdapter.addWithPostList(commentList);
+        commentAdapter.notifyDataSetChanged();
+    }
+
+    public void setProgressable(Progressable progressable) {
+        this.progressable = progressable;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final Dialog dialog = new Dialog(getActivity());
+
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+        dialog.setContentView(R.layout.fragment_reply);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        return dialog;
     }
 }

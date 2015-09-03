@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.squareup.picasso.Picasso;
 import com.yahoo.hakunamatata.R;
 import com.yahoo.hakunamatata.activities.BaseActivity;
 import com.yahoo.hakunamatata.dao.PostDao;
+import com.yahoo.hakunamatata.fragments.CommentFragment;
 import com.yahoo.hakunamatata.fragments.ReplyFragment;
+import com.yahoo.hakunamatata.interfaces.Progressable;
 import com.yahoo.hakunamatata.lib.RoundedTransformation;
 import com.yahoo.hakunamatata.lib.util;
 import com.yahoo.hakunamatata.models.Post;
@@ -26,6 +29,7 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
 
 
     private final int POST = 0, PHOTO = 1, VIDEO = 2, LINK = 3;
+    private LinearLayout item_action_panel;
 
     public JokeContentAdapter(Context context) {
         super(context);
@@ -36,6 +40,7 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
 
         RecyclerView.ViewHolder viewHolder = null;
         View itemView;
+
         switch (viewType) {
             case POST:
                 itemView = LayoutInflater.
@@ -74,7 +79,7 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
         final Post post = postList.get(position);
         final JokeHolder vh = (JokeHolder) viewHolder;
 
@@ -83,9 +88,15 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
         List<com.yahoo.hakunamatata.dao.Post> list = postDao.queryBuilder().where(
                 PostDao.Properties.Id.eq(post.id)
         ).build().list();
+
+        ((JokeHolder) viewHolder).item_action_panel.setVisibility(View.GONE);
+
         if (list.size() > 0) {
             vh.archive.setImageResource(R.drawable.heart_bright);
+            vh.archive.setOnClickListener(null);
+
         } else {
+            vh.archive.setImageResource(R.drawable.heart13);
             vh.archive.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -96,6 +107,7 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                     postToDB.setType(post.type);
                     postToDB.setPicture(post.picture);
                     postToDB.setLink(post.link);
+                    postToDB.setFull_picture(post.full_picture);
 
                     com.yahoo.hakunamatata.dao.Picture pictureToDB = new com.yahoo.hakunamatata.dao.Picture();
                     pictureToDB.setUrl(post.from.picture.url);
@@ -222,10 +234,31 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                 });
             }
 
+            ((JokeHolder) viewHolder).view.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // collapse previous
+                    if (item_action_panel != null)
+                        item_action_panel.setVisibility(View.GONE);
+
+                    item_action_panel = ((JokeHolder) viewHolder).item_action_panel;
+                    item_action_panel.setAlpha(0);
+                    item_action_panel.setVisibility(View.VISIBLE);
+                    item_action_panel.animate().setDuration(500).alpha(1);
+                    item_action_panel.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showRepliesDialog(post);
+                        }
+
+                    });
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -250,6 +283,11 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
     private void showReplyDialog(Post post) {
         ReplyFragment replyFragment = ReplyFragment.newInstance(post);
         replyFragment.show(((BaseActivity) context).getSupportFragmentManager(), "reply dialog");
+    }
+
+    private void showRepliesDialog(Post post) {
+        CommentFragment commentFragment = CommentFragment.newInstance((Progressable) context, post.id);
+        commentFragment.show(((BaseActivity) context).getSupportFragmentManager(), "comment dialog");
     }
 
 }
