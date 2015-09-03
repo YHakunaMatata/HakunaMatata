@@ -34,11 +34,22 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     public void onResume() {
+        if (rl != null)
+            rl.setVisibility(View.GONE);
         super.onResume();
-        setUpActionBar();
-        rl.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onStart() {
+        try {
+            setUpActionBar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onStart();
     }
 
     @Override
