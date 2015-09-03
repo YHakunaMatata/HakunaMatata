@@ -27,7 +27,6 @@ import java.util.List;
  */
 public class JokeContentAdapter extends BaseAdapter<Post> {
 
-
     private final int POST = 0, PHOTO = 1, VIDEO = 2, LINK = 3;
     private LinearLayout item_action_panel;
 
@@ -73,16 +72,24 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                 viewHolder = new JokeHolder(itemView);
                 break;
         }
-        itemView.setAlpha(0);
-        itemView.animate().setDuration(1000).alpha(1);
+
         return viewHolder;
+    }
+
+    private View animateItem(View itemView) {
+        itemView.setAlpha(0);
+        itemView.setScaleX(0.8f);
+        itemView.setScaleY(0.8f);
+        itemView.animate().setDuration(300).alpha(1);
+        itemView.animate().setDuration(200).scaleY(1.0f);
+        itemView.animate().setDuration(200).scaleX(1.0f);
+        return itemView;
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
         final Post post = postList.get(position);
         final JokeHolder vh = (JokeHolder) viewHolder;
-
 
         vh.time.setText(util.getBestTimeDiff(post.created_time));
         List<com.yahoo.hakunamatata.dao.Post> list = postDao.queryBuilder().where(
@@ -222,6 +229,9 @@ public class JokeContentAdapter extends BaseAdapter<Post> {
                 default:
                     break;
             }
+
+            // set animation
+            ((JokeHolder) viewHolder).view = animateItem(((JokeHolder) viewHolder).view);
 
             // bind replay button
             ImageView replyBtn = ((JokeHolder) viewHolder).replyBtn;

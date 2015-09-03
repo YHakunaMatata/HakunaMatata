@@ -3,7 +3,6 @@ package com.yahoo.hakunamatata.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,6 +44,16 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
         setUpPager();
         setUpMenu();
     }
+
+    // App would crash if Home Button is pressed when the reside Menu is opened,
+    // Error: can't get Toolbar, Title blablabla...
+    // haven't find the root cause yet
+    @Override
+    protected void onStop() {
+        resideMenu.closeMenu();
+        super.onStop();
+    }
+
 
     private void setUpPager() {
         adapter = new ListingPagerAdapter(

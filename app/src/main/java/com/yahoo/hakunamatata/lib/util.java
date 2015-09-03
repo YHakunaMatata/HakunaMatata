@@ -1,13 +1,9 @@
 package com.yahoo.hakunamatata.lib;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Parcelable;
-import android.view.View;
+import android.media.MediaPlayer;
 
-import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 import com.github.johnpersano.supertoasts.util.Style;
 import com.yahoo.hakunamatata.R;
 
@@ -31,6 +27,11 @@ import java.util.regex.Pattern;
  * Created by jonaswu on 2015/8/30.
  */
 public class util {
+    public static void startMyAudioFile(Context context) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.laugh);
+        mediaPlayer.start();
+    }
+
     public static Map<String, List<String>> splitQuery(URL url) throws UnsupportedEncodingException {
         final Map<String, List<String>> query_pairs = new LinkedHashMap<String, List<String>>();
         final String[] pairs = url.getQuery().split("&");
@@ -90,6 +91,7 @@ public class util {
     }
 
     public static void showToast(Context ctx, String message) {
+        startMyAudioFile(ctx);
         Style style = Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN);
         style.textColor = ctx.getResources().getColor(R.color.brown);
         SuperToast.create(ctx, message, SuperToast.Duration.LONG,
