@@ -62,7 +62,8 @@ public class JokeFragment extends BaseFragment implements Reloadable {
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         swipeContainer.setColorSchemeColors(0, 0, 0, 0);
-        swipeContainer.setProgressBackgroundColor(android.R.color.transparent);
+        swipeContainer.setProgressBackgroundColorSchemeColor(android.R.color.transparent);
+        // swipeContainer.setProgressBackgroundColor(android.R.color.transparent);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
