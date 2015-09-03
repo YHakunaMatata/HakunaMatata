@@ -1,6 +1,8 @@
 # HakunaMatata
 
-"Hakuna matata" is a Swahili phrase; translated, it roughly means "No worries".  In this project we're going to build an app which can make people laugh. It's a platform that collect jokes, funny images and funny videos. Also users can post and share their joke on it. We use facebook as the content storage.
+"Hakuna matata" is a Swahili phrase; translated, it roughly means "No worries".  
+
+In this project we're going to build an app which can make people laugh. It's a platform that collect jokes, funny images and funny videos. Also users can post and share their joke on it. We use facebook as the content storage.
 
 (Required)
 * [x] User have to loggin into facebook
@@ -15,7 +17,7 @@
 * [x] Add cool animation and style on the app
 
 ## Walkthrough (Milestone)
-<img src='finaldemo.gif' title='finaldemo.gif' width='550px'  height='600px'  alt=''/>
+<img src='walkthrough.gif' title='finaldemo.gif' width='550px'  height='600px'  alt=''/>
 
 ## Developer setup
 * For Mac OSX, copy `key/debug.keystore` to `~/.android/`
