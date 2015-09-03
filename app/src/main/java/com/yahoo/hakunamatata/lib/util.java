@@ -66,10 +66,10 @@ public class util {
     public static String getBestTimeDiff(Date targetTime) {
         Date currentTime = new Date();
         String display;
-        long day = TimeUnit.MILLISECONDS.toHours(currentTime.getTime() - targetTime.getTime());
-        long hour = TimeUnit.MILLISECONDS.toHours(currentTime.getTime() - targetTime.getTime());
-        long minute = TimeUnit.MILLISECONDS.toMinutes(currentTime.getTime() - targetTime.getTime());
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(currentTime.getTime() - targetTime.getTime());
+        long day = TimeUnit.MILLISECONDS.toHours(currentTime.getTime() - 28800000 - targetTime.getTime());
+        long hour = TimeUnit.MILLISECONDS.toHours(currentTime.getTime() - 28800000 - targetTime.getTime());
+        long minute = TimeUnit.MILLISECONDS.toMinutes(currentTime.getTime() - 28800000 - targetTime.getTime());
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(currentTime.getTime() - 28800000 - targetTime.getTime());
         display = String.valueOf(day) + "d";
         if (hour < 24) {
             display = String.valueOf(hour) + "h";
