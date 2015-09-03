@@ -46,6 +46,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 - [Supertoasts](https://github.com/JohnPersano/SuperToasts) - customize toast
 - [RecyclerViewSwipeDismiss](https://github.com/CodeFalling/RecyclerViewSwipeDismiss) - swipe item to trigger action on recycle view
 - [SmartTabLayout](https://github.com/ogaclejapan/SmartTabLayout) - view pager tab
+- [FolderResiderMenu](https://github.com/dkmeteor/Folder-ResideMenu) - swipe from right edge to squeeze the screen and open the menu
+- [SpringIndicator](https://github.com/chenupt/SpringIndicator) - the view pager indicator of guide fragments
+- [SecretTextView](https://github.com/matthewrkula/SecretTextView) - A TextView of which the characters fade in/out at different speeds and startoffset.
 
 
 ## Developer setup
