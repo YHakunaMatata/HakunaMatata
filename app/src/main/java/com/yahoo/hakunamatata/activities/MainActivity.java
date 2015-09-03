@@ -50,7 +50,9 @@ public class MainActivity extends BaseActivity implements SubmitFragment.PostSuc
     // haven't find the root cause yet
     @Override
     protected void onStop() {
-        resideMenu.closeMenu();
+        if(resideMenu != null && resideMenu.isOpened()) {
+            resideMenu.closeMenu();
+        }
         super.onStop();
     }
 
