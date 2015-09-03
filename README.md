@@ -16,7 +16,7 @@ In this project we're going to build an app which can make people laugh. It's a 
 * [x] The data will be stored on a open facebook group
 * [x] Add cool animation and style on the app
 
-## Walkthrough (Milestone)
+## Walkthrough
 <img src='walkthrough.gif' title='finaldemo.gif' width='550px'  height='600px'  alt=''/>
 
 ## Developer setup
